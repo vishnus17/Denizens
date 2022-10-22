@@ -3,7 +3,7 @@ import React from "react";
 
 const Onboarding = ({ navigation }) => {
   const onButtonClick = () => {
-    navigation.replace("HomeScreen");
+    navigation.replace("LoginScreen");
   };
   return (
     <View className="h-full  flex justify-center align-middle">

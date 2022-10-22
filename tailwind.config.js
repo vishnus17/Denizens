@@ -8,5 +8,10 @@ module.exports = {
   theme: {
     extend: {},
   },
+  colors: {
+    link: "#0C21C1",
+    gray: "#7b7575",
+    dark_gray: "#A9A9A9",
+  },
   plugins: [],
 };

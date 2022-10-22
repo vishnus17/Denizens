@@ -33,7 +33,7 @@ const Splash = ({ navigation }) => {
   if (viewedOnboarding == null) {
     return null;
   } else if (viewedOnboarding == true) {
-    route = "HomeScreen";
+    route = "LoginScreen";
   } else {
     route = "OnboardingScreen";
   }
