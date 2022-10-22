@@ -1,4 +1,4 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, TouchableOpacity } from "react-native";
 import React from "react";
 
 const Onboarding = ({ navigation }) => {
@@ -12,7 +12,14 @@ const Onboarding = ({ navigation }) => {
         // className="w-1/2 flex justify-center align-middle"
         style={{ justifyContent: "center" }}
       >
-        <Button onPress={onButtonClick} title="Get Started" />
+        <TouchableOpacity className="mt-10">
+          <Text
+            className=" w-full bg-blue-500 font-bold shadow-sm rounded-full p-3 text-white text-lg text-center "
+            onPress={onButtonClick}
+          >
+            Get Started
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
