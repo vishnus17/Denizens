@@ -7,7 +7,7 @@ import Paginator from "../Paginator";
 
 const Onboarding = ({ navigation }) => {
   const onButtonClick = () => {
-    navigation.replace("HomeScreen");
+    navigation.replace("LoginScreen");
   };
   const [currentIndex, setCurrentIndex] = useState(0)
   const scrollX = useRef(new Animated.Value(0)).current;

@@ -1,2 +1,3 @@
 # Denizens
-Privacy Aware SaaS community Application
+Privacy Aware SaaS React Native community Application
+
