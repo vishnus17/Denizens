@@ -72,6 +72,10 @@ cognitoUser.authenticateUser(authenticationDetails, {
 });
 
   };
+
+  const handleRegisterClick = () => {
+    navigation.replace("RegisterScreen");
+  }
   
   return (
     <View className="h-full bg-white">
@@ -86,7 +90,9 @@ cognitoUser.authenticateUser(authenticationDetails, {
               </Text>
               <View className="flex-row mt-1">
                 <Text className="text-base font-normal">You can </Text>
-                <Text className="text-[#0C21C1] text-base font-medium mx-1">
+                <Text className="text-[#0C21C1] text-base font-medium mx-1"
+                onPress={handleRegisterClick}
+                >
                   Register here !
                 </Text>
               </View>
