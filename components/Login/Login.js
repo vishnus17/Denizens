@@ -5,11 +5,72 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { Image } from "react-native-elements";
+import {
+  AuthenticationDetails,
+  CognitoUser,
+  CognitoUserAttribute,
+  CognitoUserPool,
+  CookieStorage
+} from "amazon-cognito-identity-js";
+
+const region = "ap-south-1";
 
 const Login = ({ navigation }) => {
-  const [isChecked, setChecked] = useState(false);
   const handleLogin = () => {
-    navigation.replace("HomeScreen");
+
+  var authenticationData = {
+	Username: "vishnu.satheesh178@gmail.com",
+	Password: "Qwerty@12345",
+};
+var authenticationDetails = new AuthenticationDetails(
+	authenticationData
+);
+var poolData = {
+	UserPoolId: 'ap-south-1_CjfNcNygq', // Your user pool id here
+	ClientId: '3a6g176qng5vtfnul7pm8uv0ek', // Your client id here
+};
+var userPool = new CognitoUserPool(poolData);
+var userData = {
+	Username: "vishnu.satheesh178@gmail.com",
+	Pool: userPool,
+};
+var cognitoUser = new CognitoUser(userData);
+var cognitoUser, sessionUserAttributes;
+
+cognitoUser.authenticateUser(authenticationDetails, {
+  onSuccess: function (result) {
+    var accessToken = result.getAccessToken().getJwtToken();
+      console.log(accessToken);
+      navigation.replace("Home");
+    },
+
+  onFailure: function(err) {
+      // User authentication was not successful
+  },
+
+  mfaRequired: function(codeDeliveryDetails) {
+      // MFA is required to complete user authentication.
+      // Get the code from user and call
+      cognitoUser.sendMFACode(mfaCode, this)
+  },
+
+  newPasswordRequired: function(userAttributes, requiredAttributes) {
+      // User was signed up by an admin and must provide new
+      // password and required attributes, if any, to complete
+      // authentication.
+
+      // the api doesn't accept this field back
+      delete userAttributes.email_verified;
+
+      // store userAttributes on global variable
+      sessionUserAttributes = userAttributes;
+  },
+
+	onFailure: function(err) {
+		alert(err.message || JSON.stringify(err));
+	},
+});
+
   };
 
   const handleRegisterClick = () => {
@@ -51,7 +112,9 @@ const Login = ({ navigation }) => {
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
-                <TextInput placeholder="Enter your email" className="ml-2" />
+                <TextInput placeholder="Enter your email" className="ml-2" 
+                  // onChangeText={onChangeText}
+                  />
               </View>
             </View>
 
@@ -70,6 +133,7 @@ const Login = ({ navigation }) => {
                   placeholder="Password"
                   className="ml-2"
                   secureTextEntry={true}
+                  // onChangePassword={onChangePassword}
                 />
               </View>
               <View className="mt-[1.5] flex-row justify-end">
