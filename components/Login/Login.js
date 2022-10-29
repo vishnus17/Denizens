@@ -41,7 +41,7 @@ cognitoUser.authenticateUser(authenticationDetails, {
   onSuccess: function (result) {
     var accessToken = result.getAccessToken().getJwtToken();
       console.log(accessToken);
-      navigation.replace("Home");
+      navigation.replace("HomeScreen");
     },
 
   onFailure: function(err) {
