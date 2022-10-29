@@ -5,6 +5,7 @@ import {
   OnboardingScreen,
   SplashScreen,
   LoginScreen,
+  RegisterScreen
 } from "../screens";
 
 const AuthStack = () => {
@@ -17,6 +18,7 @@ const AuthStack = () => {
       <AuthStack.Screen name="SplashScreen" component={SplashScreen} />
       <AuthStack.Screen name="OnboardingScreen" component={OnboardingScreen} />
       <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
+      <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
       <AuthStack.Screen name="HomeScreen" component={HomeScreen} />
     </AuthStack.Navigator>
   );
