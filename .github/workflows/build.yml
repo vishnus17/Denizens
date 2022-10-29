@@ -1,9 +1,8 @@
 on:
   pull_request:
-    types:
-      - closed
-    branches:
-      - main
+    branches: [ main ]
+    types: [opened, synchronize, reopened]
+
 jobs:
   publish:
     runs-on: ubuntu-latest
