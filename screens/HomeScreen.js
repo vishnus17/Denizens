@@ -12,7 +12,7 @@ const HomeScreen = () => {
         <Text className="text-center">Home</Text>
       </View>
       <View>
-        <Button onPress={onButtonClick} title="refresh App" />
+        <Button onPress={onButtonClick} title="Successfully logged in" />
       </View>
     </SafeAreaView>
   );
