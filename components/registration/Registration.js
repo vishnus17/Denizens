@@ -6,33 +6,33 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { Image } from "react-native-elements";
 
-const Login = ({ navigation }) => {
+export default Register = ({ navigation }) => {
   const [isChecked, setChecked] = useState(false);
-  const handleLogin = () => {
+  const handleRegister = () => {
     navigation.replace("HomeScreen");
   };
 
-  const handleRegisterClick = () => {
-    navigation.replace("RegisterScreen");
+  const handleLoginClick = () => {
+    navigation.replace("LoginScreen");
   }
-  
+
   return (
     <View className="h-full bg-white">
       <View className="h-full mx-5 my-5 flex-1 bg-white relative">
         <Text className="mx-1 my-5 text-[20] font-semibold">Denizens</Text>
         <View className="mx-2 my-5 flex-1">
           <View className="flex ">
-            <Text className="text-3xl font-medium">Sign in</Text>
-            <View className="flex-column mt-8 ">
+            <Text className="text-3xl font-medium">Register</Text>
+            <View className="flex-column mt-2 ">
               <Text className="text-base font-normal">
-                If you don’t have an account
+                If you already have an account
               </Text>
               <View className="flex-row mt-1">
                 <Text className="text-base font-normal">You can </Text>
-                <Text className="text-[#0C21C1] text-base font-medium mx-1"
-                onPress={handleRegisterClick}
+                <Text className="text-[#0C21C1] text-base font-medium mx-1" 
+                    onPress={handleLoginClick}
                 >
-                  Register here !
+                  Login here !
                 </Text>
               </View>
             </View>
@@ -40,7 +40,33 @@ const Login = ({ navigation }) => {
 
           {/* taking username and password */}
 
-          <View className="flex-col  mt-14">
+          <View className="flex-col  mt-6">
+            {/* first name */}
+            <View className="flex flex-col">
+              <Text className="text-base font-normal">First Name</Text>
+              <View className="flex flex-row bg-gray-100 w-auto items-center p-2 border-gray border rounded-md my-2">
+                <MaterialCommunityIcons
+                  name="email-outline"
+                  size={19}
+                  color={"#7978B5"}
+                  style={{ fontWeight: "400" }}
+                />
+                <TextInput placeholder="Enter your First Name" className="ml-2" />
+              </View>
+            </View>
+
+            <View className="flex flex-col">
+              <Text className="text-base font-normal">Last Name</Text>
+              <View className="flex flex-row bg-gray-100 w-auto items-center p-2 border-gray border rounded-md my-2">
+                <MaterialCommunityIcons
+                  name="email-outline"
+                  size={19}
+                  color={"#7978B5"}
+                  style={{ fontWeight: "400" }}
+                />
+                <TextInput placeholder="Enter your Last Name" className="ml-2" />
+              </View>
+            </View>
             {/* email */}
             <View className="flex flex-col">
               <Text className="text-base font-normal">Email</Text>
@@ -57,7 +83,7 @@ const Login = ({ navigation }) => {
 
             {/* password */}
 
-            <View className="flex flex-col mt-6">
+            <View className="flex flex-col ">
               <Text className="text-base font-normal">Password</Text>
               <View className="flex flex-row bg-gray-100 w-auto items-center p-2 border-gray border rounded-md my-2">
                 <MaterialCommunityIcons
@@ -72,27 +98,15 @@ const Login = ({ navigation }) => {
                   secureTextEntry={true}
                 />
               </View>
-              <View className="mt-[1.5] flex-row justify-end">
-                {/* <Checkbox
-                  style}}
-                  value={isChecked}
-                  onValueChange={setChecked}
-                  color={isChecked ? "blue" : undefined}
-                  button
-                /> */}
-                <Text className="font-light text-[#888888]">
-                  forgot password ?
-                </Text>
-              </View>
-              <TouchableOpacity className="mt-14">
+              <TouchableOpacity className="mt-8">
                 <Text
                   className=" w-full bg-blue-500 font-bold shadow-sm rounded-full p-3 text-white text-lg text-center "
-                  onPress={handleLogin}
+                  onPress={handleRegister}
                 >
-                  Login
+                  Register
                 </Text>
               </TouchableOpacity>
-              <Text className="my-12 text-center font-normal text-[#B5B5B5] text-base">
+              <Text className="my-6 text-center font-normal text-[#B5B5B5] text-base">
                 or continue with
               </Text>
               <View className="flex-row justify-center">
@@ -116,5 +130,3 @@ const Login = ({ navigation }) => {
     </View>
   );
 };
-
-export default Login;
