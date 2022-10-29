@@ -20,7 +20,7 @@ const Login = ({ navigation }) => {
 
   var authenticationData = {
 	Username: "vishnu.satheesh178@gmail.com",
-	Password: "Qwerty@12345",
+	Password: "Denizens@123",
 };
 var authenticationDetails = new AuthenticationDetails(
 	authenticationData
@@ -41,7 +41,7 @@ cognitoUser.authenticateUser(authenticationDetails, {
   onSuccess: function (result) {
     var accessToken = result.getAccessToken().getJwtToken();
       console.log(accessToken);
-      navigation.replace("Home");
+      navigation.replace("HomeScreen");
     },
 
   onFailure: function(err) {
