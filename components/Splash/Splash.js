@@ -32,9 +32,11 @@ const Splash = ({ navigation }) => {
   // checking status of viewedOnboarding component
   if (viewedOnboarding == null) {
     return null;
-  } else if (viewedOnboarding == true) {
-    route = "HomeScreen";
-  } else {
+  } 
+  // else if (viewedOnboarding == true) {
+  //   route = "HomeScreen";
+  // } 
+  else {
     route = "OnboardingScreen";
   }
 
