@@ -1,5 +1,5 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { React, useState } from "react";
+import { View, Text, TextInput, TouchableOpacity,Alert } from "react-native";
+import { React, useState,useEffect } from "react";
 import Input from "./Input";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -10,73 +10,109 @@ import {
   CognitoUser,
   CognitoUserAttribute,
   CognitoUserPool,
-  CookieStorage
+  CookieStorage,
 } from "amazon-cognito-identity-js";
 
 const region = "ap-south-1";
 
 const Login = ({ navigation }) => {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+
   const handleLogin = () => {
+    var authenticationData = {
+      Username: username,
+      Password: password,
+    };
+    console.log(authenticationData);
+    var authenticationDetails = new AuthenticationDetails(authenticationData);
+    var poolData = {
+      UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
+      ClientId: "3a6g176qng5vtfnul7pm8uv0ek", // Your client id here
+    };
+    var userPool = new CognitoUserPool(poolData);
+    var userData = {
+      Username: "vishnu.satheesh178@gmail.com",
+      Pool: userPool,
+    };
+    var cognitoUser = new CognitoUser(userData);
+    var cognitoUser, sessionUserAttributes;
+    cognitoUser.authenticateUser(authenticationDetails, {
+      onSuccess: function (result) {
+        // var accessToken = result.getAccessToken().getJwtToken();
+        var idToken = result.getIdToken().getJwtToken();
+        // console.log(accessToken);
+        console.log(idToken);
 
-  var authenticationData = {
-	Username: "vishnu.satheesh178@gmail.com",
-	Password: "Denizens@123",
-};
-var authenticationDetails = new AuthenticationDetails(
-	authenticationData
-);
-var poolData = {
-	UserPoolId: 'ap-south-1_CjfNcNygq', // Your user pool id here
-	ClientId: '3a6g176qng5vtfnul7pm8uv0ek', // Your client id here
-};
-var userPool = new CognitoUserPool(poolData);
-var userData = {
-	Username: "vishnu.satheesh178@gmail.com",
-	Pool: userPool,
-};
-var cognitoUser = new CognitoUser(userData);
-var cognitoUser, sessionUserAttributes;
+        // return user name
+        cognitoUser.getUserAttributes(function (err, attributes) {
+          if (err) {
+            console.log(err);
+          } else {
+          Alert.alert(
+          "Welcome" + " " + (attributes[3].getValue()),
+          "You have successfully logged in",
+          [
+            {
+              text: "OK",
+              onPress: () => console.log("OK Pressed"),
+              style: "cancel"
+            },
+          ],
+          { cancelable: false }
+        );
+        }
+      });
+        // alert("Login Successful");
+        navigation.replace("HomeScreen");
+        var userAttributes = cognitoUser.getUserAttributes(function (
+          err,
+          result
+        ) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          sessionUserAttributes = JSON.stringify(result);
+          console.log(sessionUserAttributes);
+        }
+        );
+      },
+      
 
-cognitoUser.authenticateUser(authenticationDetails, {
-  onSuccess: function (result) {
-    var accessToken = result.getAccessToken().getJwtToken();
-      console.log(accessToken);
-      navigation.replace("HomeScreen");
-    },
+      onFailure: function (err) {
+        // User authentication was not successful
+      },
 
-  onFailure: function(err) {
-      // User authentication was not successful
-  },
+      mfaRequired: function (codeDeliveryDetails) {
+        // MFA is required to complete user authentication.
+        // Get the code from user and call
+        cognitoUser.sendMFACode(mfaCode, this);
+      },
 
-  mfaRequired: function(codeDeliveryDetails) {
-      // MFA is required to complete user authentication.
-      // Get the code from user and call
-      cognitoUser.sendMFACode(mfaCode, this)
-  },
+      newPasswordRequired: function (userAttributes, requiredAttributes) {
+        // User was signed up by an admin and must provide new
+        // password and required attributes, if any, to complete
+        // authentication.
 
-  newPasswordRequired: function(userAttributes, requiredAttributes) {
-      // User was signed up by an admin and must provide new
-      // password and required attributes, if any, to complete
-      // authentication.
+        // the api doesn't accept this field back
+        delete userAttributes.email_verified;
 
-      // the api doesn't accept this field back
-      delete userAttributes.email_verified;
+        // store userAttributes on global variable
+        sessionUserAttributes = userAttributes;
+      },
 
-      // store userAttributes on global variable
-      sessionUserAttributes = userAttributes;
-  },
-
-	onFailure: function(err) {
-		alert(err.message || JSON.stringify(err));
-	},
-});
-
+      onFailure: function (err) {
+        alert(err.message || JSON.stringify(err));
+      },
+      
+    });
   };
 
   const handleRegisterClick = () => {
     navigation.replace("RegisterScreen");
-  }
-  
+  };
+
   return (
     <View className="h-full bg-white">
       <View className="h-full mx-5 my-5 flex-1 bg-white relative">
@@ -90,8 +126,9 @@ cognitoUser.authenticateUser(authenticationDetails, {
               </Text>
               <View className="flex-row mt-1">
                 <Text className="text-base font-normal">You can </Text>
-                <Text className="text-[#0C21C1] text-base font-medium mx-1"
-                onPress={handleRegisterClick}
+                <Text
+                  className="text-[#0C21C1] text-base font-medium mx-1"
+                  onPress={handleRegisterClick}
                 >
                   Register here !
                 </Text>
@@ -112,9 +149,11 @@ cognitoUser.authenticateUser(authenticationDetails, {
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
-                <TextInput placeholder="Enter your email" className="ml-2" 
-                  // onChangeText={onChangeText}
-                  />
+                <TextInput
+                  placeholder="Enter your email"
+                  className="ml-2"
+                  onChangeText={setUsername}
+                />
               </View>
             </View>
 
@@ -133,7 +172,7 @@ cognitoUser.authenticateUser(authenticationDetails, {
                   placeholder="Password"
                   className="ml-2"
                   secureTextEntry={true}
-                  // onChangePassword={onChangePassword}
+                  onChangeText={setPassword}
                 />
               </View>
               <View className="mt-[1.5] flex-row justify-end">
