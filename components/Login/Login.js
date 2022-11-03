@@ -1,5 +1,5 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { React, useState } from "react";
+import { View, Text, TextInput, TouchableOpacity,Alert } from "react-native";
+import { React, useState,useEffect } from "react";
 import Input from "./Input";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -21,9 +21,10 @@ const Login = ({ navigation }) => {
 
   const handleLogin = () => {
     var authenticationData = {
-      Username: "vishnu.satheesh178@gmail.com",
-      Password: "Qwerty@12345",
+      Username: username,
+      Password: password,
     };
+    console.log(authenticationData);
     var authenticationDetails = new AuthenticationDetails(authenticationData);
     var poolData = {
       UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
@@ -36,14 +37,48 @@ const Login = ({ navigation }) => {
     };
     var cognitoUser = new CognitoUser(userData);
     var cognitoUser, sessionUserAttributes;
-
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: function (result) {
-        var accessToken = result.getAccessToken().getJwtToken();
-        console.log(accessToken);
-        navigation.replace("Home");
-      },
+        // var accessToken = result.getAccessToken().getJwtToken();
+        var idToken = result.getIdToken().getJwtToken();
+        // console.log(accessToken);
+        console.log(idToken);
 
+        // return user name
+        cognitoUser.getUserAttributes(function (err, attributes) {
+          if (err) {
+            console.log(err);
+          } else {
+          Alert.alert(
+          "Welcome" + " " + (attributes[3].getValue()),
+          "You have successfully logged in",
+          [
+            {
+              text: "OK",
+              onPress: () => console.log("OK Pressed"),
+              style: "cancel"
+            },
+          ],
+          { cancelable: false }
+        );
+        }
+      });
+        // alert("Login Successful");
+        navigation.replace("HomeScreen");
+        var userAttributes = cognitoUser.getUserAttributes(function (
+          err,
+          result
+        ) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          sessionUserAttributes = JSON.stringify(result);
+          console.log(sessionUserAttributes);
+        }
+        );
+      },
+      
       onFailure: function (err) {
         // User authentication was not successful
       },
@@ -69,6 +104,7 @@ const Login = ({ navigation }) => {
       onFailure: function (err) {
         alert(err.message || JSON.stringify(err));
       },
+
     });
   };
 
@@ -135,8 +171,8 @@ const Login = ({ navigation }) => {
                   placeholder="Password"
                   className="ml-2"
                   secureTextEntry={true}
-                  onChangePassword={setPassword}
-                />
+                  onChangeText={setPassword}
+                  />
               </View>
               <View className="mt-[1.5] flex-row justify-end">
                 {/* <Checkbox
