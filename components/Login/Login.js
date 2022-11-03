@@ -79,7 +79,6 @@ const Login = ({ navigation }) => {
         );
       },
       
-
       onFailure: function (err) {
         // User authentication was not successful
       },
@@ -105,7 +104,7 @@ const Login = ({ navigation }) => {
       onFailure: function (err) {
         alert(err.message || JSON.stringify(err));
       },
-      
+
     });
   };
 
@@ -173,7 +172,7 @@ const Login = ({ navigation }) => {
                   className="ml-2"
                   secureTextEntry={true}
                   onChangeText={setPassword}
-                />
+                  />
               </View>
               <View className="mt-[1.5] flex-row justify-end">
                 {/* <Checkbox
