@@ -14,7 +14,7 @@ export default Register = ({ navigation }) => {
 
   const handleLoginClick = () => {
     navigation.replace("LoginScreen");
-  }
+  };
 
   return (
     <View className="h-full bg-white">
@@ -29,11 +29,11 @@ export default Register = ({ navigation }) => {
               </Text>
               <View className="flex-row mt-1">
                 <Text className="text-base font-normal">You can </Text>
-                <Text className="text-[#0C21C1] text-base font-medium mx-1" 
-                    onPress={handleLoginClick}
-                >
-                  Login here !
-                </Text>
+                <TouchableOpacity onPress={handleLoginClick}>
+                  <Text className="text-[#0C21C1] text-base font-medium mx-1">
+                    Login here !
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -51,7 +51,10 @@ export default Register = ({ navigation }) => {
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
-                <TextInput placeholder="Enter your First Name" className="ml-2" />
+                <TextInput
+                  placeholder="Enter your First Name"
+                  className="ml-2"
+                />
               </View>
             </View>
 
@@ -64,7 +67,10 @@ export default Register = ({ navigation }) => {
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
-                <TextInput placeholder="Enter your Last Name" className="ml-2" />
+                <TextInput
+                  placeholder="Enter your Last Name"
+                  className="ml-2"
+                />
               </View>
             </View>
             {/* email */}
@@ -110,18 +116,24 @@ export default Register = ({ navigation }) => {
                 or continue with
               </Text>
               <View className="flex-row justify-center">
-                <Image
-                  source={require("../../assests/icons/facebook.png")}
-                  className="h-10 w-10 mx-3"
-                />
-                <Image
-                  source={require("../../assests/icons/google.png")}
-                  className="h-10 w-10 mx-3"
-                />
-                <Image
-                  source={require("../../assests/icons/apple.png")}
-                  className="h-10 w-10 mx-3"
-                />
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/facebook.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/google.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/apple.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </View>

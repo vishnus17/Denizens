@@ -5,6 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { Image } from "react-native-elements";
+
 import {
   AuthenticationDetails,
   CognitoUser,
@@ -89,12 +90,11 @@ const Login = ({ navigation }) => {
               </Text>
               <View className="flex-row mt-1">
                 <Text className="text-base font-normal">You can </Text>
-                <Text
-                  className="text-[#0C21C1] text-base font-medium mx-1"
-                  onPress={handleRegisterClick}
-                >
-                  Register here !
-                </Text>
+                <TouchableOpacity onPress={handleRegisterClick}>
+                  <Text className="text-[#0C21C1] text-base font-medium mx-1">
+                    Register here !
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -105,16 +105,16 @@ const Login = ({ navigation }) => {
             {/* email */}
             <View className="flex flex-col">
               <Text className="text-base font-normal">Email</Text>
-              <View className="flex flex-row bg-gray-100 w-auto items-center p-2 border-gray border rounded-md my-2">
+              <View className="flex flex-row bg-gray-200 w-auto items-center p-3 active:border rounded-md my-2">
                 <MaterialCommunityIcons
                   name="email-outline"
-                  size={19}
+                  size={20}
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
                 <TextInput
                   placeholder="Enter your email"
-                  className="ml-2"
+                  className="ml-2 w-full"
                   onChangeText={setUsername}
                 />
               </View>
@@ -124,16 +124,16 @@ const Login = ({ navigation }) => {
 
             <View className="flex flex-col mt-6">
               <Text className="text-base font-normal">Password</Text>
-              <View className="flex flex-row bg-gray-100 w-auto items-center p-2 border-gray border rounded-md my-2">
+              <View className="flex flex-row bg-gray-200 w-auto items-center p-3 active:border rounded-md my-2">
                 <MaterialCommunityIcons
                   name="lock-outline"
-                  size={19}
+                  size={20}
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
                 <TextInput
                   placeholder="Password"
-                  className="ml-2"
+                  className="ml-2 w-full"
                   secureTextEntry={true}
                   onChangePassword={setPassword}
                 />
@@ -146,15 +146,18 @@ const Login = ({ navigation }) => {
                   color={isChecked ? "blue" : undefined}
                   button
                 /> */}
-                <Text className="font-light text-[#888888]">
-                  forgot password ?
-                </Text>
-              </View>
-              <TouchableOpacity className="mt-14">
-                <Text
-                  className=" w-full bg-blue-500 font-bold shadow-sm rounded-full p-3 text-white text-lg text-center "
-                  onPress={handleLogin}
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("ForgotPasswordScreen");
+                  }}
                 >
+                  <Text className="font-light   text-[#0C21C1]">
+                    forgot password ?
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity className="mt-14" onPress={handleLogin}>
+                <Text className=" w-full bg-blue-500 font-bold shadow-sm rounded-full p-3 text-white text-lg text-center ">
                   Login
                 </Text>
               </TouchableOpacity>
@@ -162,18 +165,24 @@ const Login = ({ navigation }) => {
                 or continue with
               </Text>
               <View className="flex-row justify-center">
-                <Image
-                  source={require("../../assests/icons/facebook.png")}
-                  className="h-10 w-10 mx-3"
-                />
-                <Image
-                  source={require("../../assests/icons/google.png")}
-                  className="h-10 w-10 mx-3"
-                />
-                <Image
-                  source={require("../../assests/icons/apple.png")}
-                  className="h-10 w-10 mx-3"
-                />
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/facebook.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/google.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/apple.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
