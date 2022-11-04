@@ -28,23 +28,37 @@ const Register = ({ navigation }) => {
     };
     var userPool = new CognitoUserPool(poolData);
     var name = firstname + " " + lastname;
-    userPool.signUp(
-      name,
-      email,
-      password,
-      attributeList,
-      null,
-      function (err, result) {
-        if (err) {
-          alert(err.message || JSON.stringify(err));
-          return;
-        }
-        var cognitoUser = result.user;
-        console.log("user name is " + cognitoUser.getUsername());
-        alert("Registration Successful");
-        navigation.replace("LoginScreen");
+    var attributeList=[];
+
+    var role = {
+      Name: "custom:userRole",
+      Value: "admin",
+    }
+
+    var dataname = {
+      Name: "name",
+      Value: name,
+    };
+
+    var attributeRole = new CognitoUserAttribute(role);
+    attributeList.push(attributeRole);
+
+    var attributeName = new CognitoUserAttribute(dataname);
+    attributeList.push(attributeName);
+
+    userPool.signUp(email, password, attributeList, null, function(
+      err,
+      result
+    ) {
+      if (err) {
+        alert(err.message || JSON.stringify(err));
+        return;
       }
-    );
+      var cognitoUser = result.user;
+      console.log('user name is ' + cognitoUser.getUsername());
+      alert("Registration Successful");
+      navigation.replace("LoginScreen");
+    });
   };
 
   const handleLoginClick = () => {

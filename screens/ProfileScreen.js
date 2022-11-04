@@ -10,7 +10,7 @@ var poolData = {
 var userPool = new CognitoUserPool(poolData);
 var cognitoUser = userPool.getCurrentUser();
 
-const getUser = (setRole, setName) => {
+const getUser = (setUser) => {
   if (cognitoUser != null) {
     cognitoUser.getSession(function (err, session) {
       if (err) {
@@ -22,8 +22,10 @@ const getUser = (setRole, setName) => {
         if (err) {
           console.log(err);
         } else {
-          setRole(attributes[2].getValue());
-          setName(attributes[3].getValue());
+          setUser({
+            name: attributes[3].getValue(),
+            role: attributes[2].getValue(),
+          });
         }
       });
     });
@@ -31,9 +33,11 @@ const getUser = (setRole, setName) => {
 };
 
 const ProfileScreen = ({ navigation }) => {
-  const [role, setRole] = useState("");
-  const [name, setName] = useState("");
-  useEffect(() => getUser(setRole, setName), []);
+  const [user, setUser] = useState({
+    name: null,
+    role: null,
+  });
+  useEffect(() => getUser(setUser), []);
 
   const signOut = () => {
     // console.log(cognitoUser);
@@ -53,10 +57,8 @@ const ProfileScreen = ({ navigation }) => {
         <Text className="text-center">Profile</Text>
       </View>
       <View>
-        <Text className="text-center">
-          {" "}
-          {getUser}
-          Welcome {name}. You are logged in as {role}
+        <Text className="text-center">          
+          Welcome {user.name}. You are logged in as {user.role}
         </Text>
       </View>
       <View>

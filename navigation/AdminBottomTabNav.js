@@ -9,7 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Header from "../components/Header";
 const Tab = createMaterialBottomTabNavigator();
 
-const BottomTabNav = () => {
+const AdminBottomTabNav = () => {
   return (
     <Tab.Navigator
       labeled={true}
@@ -30,6 +30,15 @@ const BottomTabNav = () => {
         }}
       />
       <Tab.Screen
+        name="post"
+        component={Post}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="add-circle" size={24} color={color}></Ionicons>
+          ),
+        }}
+      />
+      <Tab.Screen
         name="profile"
         component={ProfileScreen}
         options={{
@@ -42,5 +51,5 @@ const BottomTabNav = () => {
   );
 };
 
-export default BottomTabNav;
+export default AdminBottomTabNav;
 const style = {};

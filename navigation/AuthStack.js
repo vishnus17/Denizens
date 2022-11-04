@@ -9,6 +9,7 @@ import {
   ForgotPasswordScreen,
   ChangePasswordScreen,
 } from "../screens";
+import AdminBottomTabNav from "./AdminBottomTabNav";
 import BottomTabNav from "./BottomTabNav";
 
 const AuthStack = () => {
@@ -31,6 +32,7 @@ const AuthStack = () => {
       />
       <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
       <AuthStack.Screen name="BottomTabNav" component={BottomTabNav} />
+      <AuthStack.Screen name="AdminBottomTabNav" component={AdminBottomTabNav} />
     </AuthStack.Navigator>
   );
 };

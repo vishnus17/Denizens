@@ -25,7 +25,6 @@ const Login = ({ navigation }) => {
       Username: username,
       Password: password,
     };
-    console.log(authenticationData);
     var authenticationDetails = new AuthenticationDetails(authenticationData);
     var poolData = {
       UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
@@ -33,7 +32,7 @@ const Login = ({ navigation }) => {
     };
     var userPool = new CognitoUserPool(poolData);
     var userData = {
-      Username: "vishnu.satheesh178@gmail.com",
+      Username: username,
       Pool: userPool,
     };
     var cognitoUser = new CognitoUser(userData);
@@ -64,8 +63,18 @@ const Login = ({ navigation }) => {
             );
           }
         });
+        cognitoUser.getUserAttributes(function (err, attributes) {
+          if (err) {
+            console.log(err);
+          } else {
+            if (attributes[2].getValue() == "admin") {
+              navigation.replace("AdminBottomTabNav");
+            }
+            else (navigation.replace("BottomTabNav"))
+          }
+        });
+        
         // alert("Login Successful");
-        navigation.replace("BottomTabNav");
         var userAttributes = cognitoUser.getUserAttributes(function (
           err,
           result
