@@ -1,5 +1,5 @@
-import { View, Text, TextInput, TouchableOpacity,Alert } from "react-native";
-import { React, useState,useEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import { React, useState, useEffect } from "react";
 import Input from "./Input";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -50,22 +50,22 @@ const Login = ({ navigation }) => {
           if (err) {
             console.log(err);
           } else {
-          Alert.alert(
-          "Welcome" + " " + (attributes[3].getValue()),
-          "You have successfully logged in",
-          [
-            {
-              text: "OK",
-              onPress: () => console.log("OK Pressed"),
-              style: "cancel"
-            },
-          ],
-          { cancelable: false }
-        );
-        }
-      });
+            Alert.alert(
+              "Welcome" + " " + attributes[3].getValue(),
+              "You have successfully logged in",
+              [
+                {
+                  text: "OK",
+                  onPress: () => console.log("OK Pressed"),
+                  style: "cancel",
+                },
+              ],
+              { cancelable: false }
+            );
+          }
+        });
         // alert("Login Successful");
-        navigation.replace("HomeScreen");
+        navigation.replace("BottomTabNav");
         var userAttributes = cognitoUser.getUserAttributes(function (
           err,
           result
@@ -76,10 +76,9 @@ const Login = ({ navigation }) => {
           }
           sessionUserAttributes = JSON.stringify(result);
           console.log(sessionUserAttributes);
-        }
-        );
+        });
       },
-      
+
       onFailure: function (err) {
         // User authentication was not successful
       },
@@ -105,7 +104,6 @@ const Login = ({ navigation }) => {
       onFailure: function (err) {
         alert(err.message || JSON.stringify(err));
       },
-
     });
   };
 
@@ -172,7 +170,7 @@ const Login = ({ navigation }) => {
                   className="ml-2 w-full"
                   secureTextEntry={true}
                   onChangeText={setPassword}
-                  />
+                />
               </View>
               <View className="mt-[1.5] flex-row justify-end">
                 {/* <Checkbox

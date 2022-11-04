@@ -31,8 +31,6 @@ const AuthStack = () => {
       />
       <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
       <AuthStack.Screen name="BottomTabNav" component={BottomTabNav} />
-
-      <AuthStack.Screen name="HomeScreen" component={HomeScreen} />
     </AuthStack.Navigator>
   );
 };

@@ -26,7 +26,7 @@ const ChangePassword = ({ navigation }) => {
             size={28}
             className="ml-1 flex-none"
             onPress={() => {
-              navigation.goBack();
+              navigation.replace("LoginScreen");
             }}
           />
         </TouchableOpacity>

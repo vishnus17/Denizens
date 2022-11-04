@@ -31,7 +31,7 @@ const ForgotPassword = ({ navigation }) => {
 
   const handleSubmit = () => {
     validateEmail && email != "" && OTP != ""
-      ? navigation.navigate("ChangePasswordScreen")
+      ? navigation.replace("ChangePasswordScreen")
       : "";
   };
   return (
