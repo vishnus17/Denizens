@@ -5,8 +5,11 @@ import {
   OnboardingScreen,
   SplashScreen,
   LoginScreen,
-  RegisterScreen
+  RegisterScreen,
+  ForgotPasswordScreen,
+  ChangePasswordScreen,
 } from "../screens";
+import BottomTabNav from "./BottomTabNav";
 
 const AuthStack = () => {
   const AuthStack = createNativeStackNavigator();
@@ -18,8 +21,16 @@ const AuthStack = () => {
       <AuthStack.Screen name="SplashScreen" component={SplashScreen} />
       <AuthStack.Screen name="OnboardingScreen" component={OnboardingScreen} />
       <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
+      <AuthStack.Screen
+        name="ForgotPasswordScreen"
+        component={ForgotPasswordScreen}
+      />
+      <AuthStack.Screen
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
+      />
       <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
-      <AuthStack.Screen name="HomeScreen" component={HomeScreen} />
+      <AuthStack.Screen name="BottomTabNav" component={BottomTabNav} />
     </AuthStack.Navigator>
   );
 };

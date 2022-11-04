@@ -20,7 +20,7 @@ const Register = ({ navigation }) => {
   const [lastname, setLastName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  
+
   const handleRegister = () => {
     var poolData = {
       UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
@@ -28,24 +28,28 @@ const Register = ({ navigation }) => {
     };
     var userPool = new CognitoUserPool(poolData);
     var name = firstname + " " + lastname;
-    userPool.signUp(name,email,password, attributeList, null, function (
-      err,
-      result
-    ) {
-      if (err) {
-        alert(err.message || JSON.stringify(err));
-        return;
+    userPool.signUp(
+      name,
+      email,
+      password,
+      attributeList,
+      null,
+      function (err, result) {
+        if (err) {
+          alert(err.message || JSON.stringify(err));
+          return;
+        }
+        var cognitoUser = result.user;
+        console.log("user name is " + cognitoUser.getUsername());
+        alert("Registration Successful");
+        navigation.replace("LoginScreen");
       }
-      var cognitoUser = result.user;
-      console.log("user name is " + cognitoUser.getUsername());
-      alert("Registration Successful");
-      navigation.replace("LoginScreen");
-    });
+    );
   };
 
   const handleLoginClick = () => {
     navigation.replace("LoginScreen");
-  }
+  };
 
   return (
     <View className="h-full bg-white">
@@ -60,11 +64,11 @@ const Register = ({ navigation }) => {
               </Text>
               <View className="flex-row mt-1">
                 <Text className="text-base font-normal">You can </Text>
-                <Text className="text-[#0C21C1] text-base font-medium mx-1" 
-                    onPress={handleLoginClick}
-                >
-                  Login here !
-                </Text>
+                <TouchableOpacity onPress={handleLoginClick}>
+                  <Text className="text-[#0C21C1] text-base font-medium mx-1">
+                    Login here !
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -82,7 +86,11 @@ const Register = ({ navigation }) => {
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
-                <TextInput placeholder="Enter your First Name" className="ml-2" onChangeText={setFirstName}/>
+                <TextInput
+                  placeholder="Enter your First Name"
+                  className="ml-2"
+                  onChangeText={setFirstName}
+                />
               </View>
             </View>
 
@@ -95,11 +103,11 @@ const Register = ({ navigation }) => {
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
-                <TextInput 
-                  placeholder="Enter your Last Name" 
-                  className="ml-2" 
+                <TextInput
+                  placeholder="Enter your Last Name"
+                  className="ml-2"
                   onChangeText={setLastName}
-                  />
+                />
               </View>
             </View>
             {/* email */}
@@ -150,18 +158,24 @@ const Register = ({ navigation }) => {
                 or continue with
               </Text>
               <View className="flex-row justify-center">
-                <Image
-                  source={require("../../assests/icons/facebook.png")}
-                  className="h-10 w-10 mx-3"
-                />
-                <Image
-                  source={require("../../assests/icons/google.png")}
-                  className="h-10 w-10 mx-3"
-                />
-                <Image
-                  source={require("../../assests/icons/apple.png")}
-                  className="h-10 w-10 mx-3"
-                />
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/facebook.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/google.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/apple.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
