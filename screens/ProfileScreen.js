@@ -7,10 +7,10 @@ var poolData = {
   UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
   ClientId: "3a6g176qng5vtfnul7pm8uv0ek", // Your client id here
 };
-var userPool = new CognitoUserPool(poolData);
-var cognitoUser = userPool.getCurrentUser();
 
 const getUser = (setUser) => {
+  var userPool = new CognitoUserPool(poolData);
+  var cognitoUser = userPool.getCurrentUser();
   if (cognitoUser != null) {
     cognitoUser.getSession(function (err, session) {
       if (err) {
@@ -37,10 +37,11 @@ const ProfileScreen = ({ navigation }) => {
     name: null,
     role: null,
   });
-  useEffect(() => getUser(setUser), []);
 
   const signOut = () => {
     // console.log(cognitoUser);
+    var userPool = new CognitoUserPool(poolData);
+    var cognitoUser = userPool.getCurrentUser();
     if (cognitoUser != null) {
       cognitoUser.signOut();
       AsyncStorage.removeItem("userToken");
@@ -51,13 +52,14 @@ const ProfileScreen = ({ navigation }) => {
   // const onButtonClick = () => {
   //   AsyncStorage.removeItem("@viewedOnboarding");
   // };
+  useEffect(() => getUser(setUser), []);
   return (
     <SafeAreaView className="h-full flex justify-center align-middle">
       <View>
         <Text className="text-center">Profile</Text>
       </View>
       <View>
-        <Text className="text-center">          
+        <Text className="text-center">
           Welcome {user.name}. You are logged in as {user.role}
         </Text>
       </View>
