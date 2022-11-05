@@ -32,9 +32,11 @@ const Splash = ({ navigation }) => {
   // checking status of viewedOnboarding component
   if (viewedOnboarding == null) {
     return null;
-  } else if (viewedOnboarding == true) {
+  }
+   else if (viewedOnboarding == true) {
     route = "LoginScreen";
-  } else {
+  } 
+  else {
     route = "OnboardingScreen";
   }
 
@@ -45,7 +47,7 @@ const Splash = ({ navigation }) => {
 
   return (
     <View className="h-full flex justify-center align-middle">
-      <Text className="text-center">splash</Text>
+      <Text className="text-center">splash logo here </Text>
     </View>
   );
 };

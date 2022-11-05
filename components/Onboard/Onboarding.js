@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { View, Text, Button, FlatList, Animated } from "react-native";
 import OnboardingItem from '../OnboardingItem';
+import NextButton from '../NextButton';
 import slides from "../../slides";
 import Paginator from "../Paginator";
 
@@ -17,8 +18,17 @@ const Onboarding = ({ navigation }) => {
   }).current;
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
+  const scrollTo = () =>{
+    if (currentIndex < slides.length-1){
+      slidesRef.current.scrollToIndex({index: currentIndex + 1});
+    }
+    else {
+      console.log('Last item.');
+    }
+  }
+
   return (
-    <View className="h-full  flex justify-center align-middle">
+    <View className="h-full bg-white  flex justify-center align-middle">
       <View style={{ flex: 3 }}>
         <FlatList data={slides} renderItem={({ item }) => <OnboardingItem item={item} />}
           horizontal
@@ -44,6 +54,7 @@ const Onboarding = ({ navigation }) => {
         </View> */}
       </View>
       <Paginator data={slides} scrollX={scrollX} />
+      <NextButton scrollTo={scrollTo} percentage={(currentIndex + 1)*(100 /slides.length)} />
     </View>
   );
 };
