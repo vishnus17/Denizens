@@ -5,16 +5,65 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { Image } from "react-native-elements";
+import {
+  AuthenticationDetails,
+  CognitoUser,
+  CognitoUserAttribute,
+  CognitoUserPool,
+  CookieStorage,
+} from "amazon-cognito-identity-js";
 
-export default Register = ({ navigation }) => {
-  const [isChecked, setChecked] = useState(false);
+const region = "ap-south-1";
+
+const Register = ({ navigation }) => {
+  const [firstname, setFirstName] = useState();
+  const [lastname, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
   const handleRegister = () => {
-    navigation.replace("HomeScreen");
+    var poolData = {
+      UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
+      ClientId: "3a6g176qng5vtfnul7pm8uv0ek", // Your client id here
+    };
+    var userPool = new CognitoUserPool(poolData);
+    var name = firstname + " " + lastname;
+    var attributeList=[];
+
+    var role = {
+      Name: "custom:userRole",
+      Value: "admin",
+    }
+
+    var dataname = {
+      Name: "name",
+      Value: name,
+    };
+
+    var attributeRole = new CognitoUserAttribute(role);
+    attributeList.push(attributeRole);
+
+    var attributeName = new CognitoUserAttribute(dataname);
+    attributeList.push(attributeName);
+
+    userPool.signUp(email, password, attributeList, null, function(
+      err,
+      result
+    ) {
+      if (err) {
+        alert(err.message || JSON.stringify(err));
+        return;
+      }
+      var cognitoUser = result.user;
+      console.log('user name is ' + cognitoUser.getUsername());
+      alert("Registration Successful");
+      navigation.replace("LoginScreen");
+    });
   };
 
   const handleLoginClick = () => {
     navigation.replace("LoginScreen");
-  }
+  };
 
   return (
     <View className="h-full bg-white">
@@ -29,11 +78,11 @@ export default Register = ({ navigation }) => {
               </Text>
               <View className="flex-row mt-1">
                 <Text className="text-base font-normal">You can </Text>
-                <Text className="text-[#0C21C1] text-base font-medium mx-1" 
-                    onPress={handleLoginClick}
-                >
-                  Login here !
-                </Text>
+                <TouchableOpacity onPress={handleLoginClick}>
+                  <Text className="text-[#0C21C1] text-base font-medium mx-1">
+                    Login here !
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -51,7 +100,11 @@ export default Register = ({ navigation }) => {
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
-                <TextInput placeholder="Enter your First Name" className="ml-2" />
+                <TextInput
+                  placeholder="Enter your First Name"
+                  className="ml-2"
+                  onChangeText={setFirstName}
+                />
               </View>
             </View>
 
@@ -64,7 +117,11 @@ export default Register = ({ navigation }) => {
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
-                <TextInput placeholder="Enter your Last Name" className="ml-2" />
+                <TextInput
+                  placeholder="Enter your Last Name"
+                  className="ml-2"
+                  onChangeText={setLastName}
+                />
               </View>
             </View>
             {/* email */}
@@ -77,7 +134,11 @@ export default Register = ({ navigation }) => {
                   color={"#7978B5"}
                   style={{ fontWeight: "400" }}
                 />
-                <TextInput placeholder="Enter your email" className="ml-2" />
+                <TextInput
+                  placeholder="Enter your email"
+                  className="ml-2"
+                  onChangeText={setEmail}
+                />
               </View>
             </View>
 
@@ -96,6 +157,7 @@ export default Register = ({ navigation }) => {
                   placeholder="Password"
                   className="ml-2"
                   secureTextEntry={true}
+                  onChangeText={setPassword}
                 />
               </View>
               <TouchableOpacity className="mt-8">
@@ -110,18 +172,24 @@ export default Register = ({ navigation }) => {
                 or continue with
               </Text>
               <View className="flex-row justify-center">
-                <Image
-                  source={require("../../assests/icons/facebook.png")}
-                  className="h-10 w-10 mx-3"
-                />
-                <Image
-                  source={require("../../assests/icons/google.png")}
-                  className="h-10 w-10 mx-3"
-                />
-                <Image
-                  source={require("../../assests/icons/apple.png")}
-                  className="h-10 w-10 mx-3"
-                />
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/facebook.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/google.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image
+                    source={require("../../../assests/icons/apple.png")}
+                    className="h-10 w-10 mx-3"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -130,3 +198,4 @@ export default Register = ({ navigation }) => {
     </View>
   );
 };
+export default Register;

@@ -1,23 +1,12 @@
-import { SafeAreaView, StyleSheet, Text, View, Button } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = () => {
-  const onButtonClick = () => {
-    AsyncStorage.removeItem("@viewedOnboarding");
-  };
   return (
-    <SafeAreaView className="h-full flex justify-center align-middle">
-      <View>
-        <Text className="text-center">Home</Text>
-      </View>
-      <View>
-        <Button onPress={onButtonClick} title="Successfully logged in" />
-      </View>
-    </SafeAreaView>
+    <View className="h-full w-full align-middle justify-center">
+      <Text className="text-center">HomeScreen</Text>
+    </View>
   );
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({});
