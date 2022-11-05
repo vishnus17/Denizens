@@ -23,7 +23,7 @@ const Onboarding = ({ navigation }) => {
       slidesRef.current.scrollToIndex({index: currentIndex + 1});
     }
     else {
-      console.log('Last item.');
+      onButtonClick();
     }
   }
 

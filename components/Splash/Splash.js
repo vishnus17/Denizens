@@ -33,9 +33,9 @@ const Splash = ({ navigation }) => {
   if (viewedOnboarding == null) {
     return null;
   }
-   else if (viewedOnboarding == true) {
-    route = "LoginScreen";
-  } 
+  //  else if (viewedOnboarding == true) {
+  //   route = "LoginScreen";
+  // } 
   else {
     route = "OnboardingScreen";
   }
