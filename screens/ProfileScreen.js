@@ -1,7 +1,8 @@
-import { SafeAreaView, StyleSheet, Text, View, Button } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CognitoUserPool, CookieStorage } from "amazon-cognito-identity-js";
+import { IconButton } from "react-native-paper";
 
 var poolData = {
   UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
@@ -54,17 +55,38 @@ const ProfileScreen = ({ navigation }) => {
   // };
   useEffect(() => getUser(setUser), []);
   return (
-    <SafeAreaView className="h-full flex justify-center align-middle">
-      <View>
+    <SafeAreaView className="flex h-full align-middle bg-[#0f7e8d]">
+
+      <View className="flex flex-row h-18  items-center mx-2 mt-5">
+        <TouchableOpacity>
+          <IconButton
+            icon="chevron-left"
+            size={28}
+            className="ml-1 flex-none "
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+        </TouchableOpacity>
+        <Text className="text-xl  text-center">Go Back</Text>
+      </View>
+      <View className="flex flex-grow justify-between p-8">
+        {/* <View>
         <Text className="text-center">Profile</Text>
-      </View>
-      <View>
-        <Text className="text-center">
-          Welcome {user.name}. You are logged in as {user.role}
-        </Text>
-      </View>
-      <View>
-        <Button onPress={signOut} title="Sign Out" />
+      </View> */}
+        <View >
+          <Text className="text-3xl font-medium">Welcome, {user.name}</Text>
+        </View>
+        <View>
+        <Text className="text-xl font-normal align-center">
+            You are logged in as {user.role}
+          </Text>
+        </View>
+        <TouchableOpacity className="items-center" onPress={signOut}>
+          <Text className=" w-60 bg-blue-500 font-bold shadow-sm rounded-full p-3 text-white text-lg text-center ">
+            Sign out
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
