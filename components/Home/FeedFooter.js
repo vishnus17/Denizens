@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { Feather as Icon } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
   actions: {
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
 
 const FeedFooter = ({ likes, caption, key }) => {
   const [liked, setLiked] = useState(false);
+  const [bookmark, setBookmark] = useState(false);
   const toggleLike = () => setLiked(!liked);
   return (
     <View className="border-b border-[#DADADA]">
@@ -59,7 +61,7 @@ const FeedFooter = ({ likes, caption, key }) => {
               name={liked ? "thumb-up" : "thumb-up-outline"}
               style={styles.icon}
               size={24}
-              color={liked ? "blue" : ""}
+              color={liked ? "blue" : "black"}
             ></MaterialCommunityIcons>
           </TouchableOpacity>
           <TouchableOpacity>
@@ -67,8 +69,15 @@ const FeedFooter = ({ likes, caption, key }) => {
             {/* <Icon name="send" size={24} style={styles.icon} /> */}
           </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <Icon name="bookmark" size={24} />
+        <TouchableOpacity
+          onPress={() => {
+            setBookmark(!bookmark);
+          }}
+        >
+          <Ionicons
+            name={bookmark ? "bookmark" : "bookmark-outline"}
+            size={24}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
       {/* <Text style={styles.caption}>{caption}</Text>
