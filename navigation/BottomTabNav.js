@@ -6,7 +6,6 @@ import { HomeScreen, Post, ProfileScreen } from "../screens";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
-import Header from "../components/Header";
 const Tab = createMaterialBottomTabNavigator();
 
 const BottomTabNav = () => {
