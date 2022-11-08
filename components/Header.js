@@ -29,8 +29,17 @@ const styles = StyleSheet.create({
   content: {
     flexDirection: "row",
     justifyContent: "center",
-    height: 58,
+    height: 52,
     backgroundColor: "#FAF9F9",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+
+    elevation: 7,
 
     // marginTop: StatusBar.currentHeight,
     // marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
