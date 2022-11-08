@@ -67,10 +67,10 @@ const Login = ({ navigation }) => {
           if (err) {
             console.log(err);
           } else {
-            if (attributes[2].getValue() == "admin") {
-              navigation.replace("AdminBottomTabNav");
+            if (attributes[2].getValue() == "observer") {
+              navigation.replace("BottomTabNav");
             }
-            else (navigation.replace("BottomTabNav"))
+            else (navigation.replace("AdminBottomTabNav"))
           }
         });
         
