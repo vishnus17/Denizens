@@ -1,4 +1,11 @@
-import { SafeAreaView, StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CognitoUserPool, CookieStorage } from "amazon-cognito-identity-js";
@@ -56,7 +63,6 @@ const ProfileScreen = ({ navigation }) => {
   useEffect(() => getUser(setUser), []);
   return (
     <SafeAreaView className="flex h-full align-middle bg-[#0f7e8d]">
-
       <View className="flex flex-row h-18  items-center mx-2 mt-5">
         <TouchableOpacity>
           <IconButton
@@ -74,11 +80,11 @@ const ProfileScreen = ({ navigation }) => {
         {/* <View>
         <Text className="text-center">Profile</Text>
       </View> */}
-        <View >
+        <View>
           <Text className="text-3xl font-medium">Welcome, {user.name}</Text>
         </View>
         <View>
-        <Text className="text-xl font-normal align-center">
+          <Text className="text-xl font-normal align-center">
             You are logged in as {user.role}
           </Text>
         </View>

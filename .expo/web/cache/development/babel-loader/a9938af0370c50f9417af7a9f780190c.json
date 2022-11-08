@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default as Onboarding } from \"./Onboarding\";","map":{"version":3,"names":["default","Onboarding"],"sources":["F:/BTP/Denizens/components/Onboard/index.js"],"sourcesContent":["export { default as Onboarding } from \"./Onboarding\";\r\n"],"mappings":"AAAA,SAASA,OAAO,IAAIC,UAApB"},"metadata":{},"sourceType":"module"}
