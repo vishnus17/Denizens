@@ -76,7 +76,7 @@ const ForgotPassword = ({ navigation }) => {
             keyboardType="numeric"
           />
           <TouchableOpacity>
-            <Text className="text-blue-500 font-semibold absolute right-4 top-6">
+            <Text className="text-blue-500 font-semibold absolute right-4 top-6" onPress={() => navigation.replace("OTPscreen")}>
               Generate OTP
             </Text>
           </TouchableOpacity>
