@@ -5,20 +5,41 @@ import {
     StatusBar,
     TextInput,
   } from "react-native";
-  import { React, useState } from "react";
+  import { React, useEffect, useState } from "react";
   import { IconButton } from "react-native-paper";
-  
-  const OTP = ({ navigation }) => {
-    
-    const [OTP, onChangeOTP] = useState(null);
-   
+  import {
+    AuthenticationDetails,
+    CognitoUser,
+    CognitoUserAttribute,
+    CognitoUserPool,
+    CookieStorage,
+  } from "amazon-cognito-identity-js";
 
-  
+  const OTP = ({ route,navigation }) => {
+    const [OTP, onChangeOTP] = useState(null);
+    const {email} = route.params;
     const handleSubmit = () => {
-        OTP !== ""
-        ? navigation.replace("ChangePasswordScreen")
-        : "";
+      var poolData = {
+        UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
+        ClientId: "3a6g176qng5vtfnul7pm8uv0ek", // Your client id here
+      };
+      var userPool = new CognitoUserPool(poolData);
+      var userData = {
+        Username: email,
+        Pool: userPool,
+      };
+      var cognitoUser = new CognitoUser(userData);
+      cognitoUser.confirmRegistration(OTP, true, function (err, result) {
+        if (err) {
+          alert("Incorrect OTP. Please request for a new OTP");
+          return;
+        }
+        console.log("call result: " + result);
+        alert("Your account has been verified. Please Login");
+        navigation.navigate("LoginScreen");
+      });
     };
+
     return (
       <View className="h-screen relative">
         {/* <View className="h-full mx-5 my-5 flex-1 bg-white relative">
@@ -60,7 +81,7 @@ import {
           </View>
           <TouchableOpacity
             className="w-full mt-7"
-            onPress={OTP != null ? handleSubmit : null}
+            onPress={handleSubmit}
           >
             <Text className="bg-blue-500 rounded-full p-3 text-white text-lg text-center">
              Verify
