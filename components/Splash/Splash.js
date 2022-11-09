@@ -43,11 +43,11 @@ const Splash = ({ navigation }) => {
   // Timeout for Splash screeen
   setTimeout(() => {
     navigation.replace(route);
-  }, 2000);
+  }, 100);
 
   return (
     <View className="h-full flex justify-center align-middle">
-      <Text className="text-center">splash logo here </Text>
+      <Text className="text-center"> Logo </Text>
     </View>
   );
 };
