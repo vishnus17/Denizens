@@ -33,7 +33,7 @@ const Register = ({ navigation }) => {
 
     var role = {
       Name: "custom:userRole",
-      Value: "admin",
+      Value: "observer",
     };
 
     var dataname = {
