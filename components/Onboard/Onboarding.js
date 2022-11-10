@@ -7,6 +7,7 @@ import Paginator from "../Paginator";
 
 
 const Onboarding = ({ navigation }) => {
+  // Navigate to login page
   const onButtonClick = () => {
     navigation.replace("LoginScreen");
   };
