@@ -73,10 +73,10 @@ const Login = ({ navigation }) => {
               console.log(response.data);
               const role = JSON.stringify(response.data);
               console.log(response.data.permissions);
-              if (role.includes("post:view-posts")) {
-                navigation.replace("BottomTabNav");
+              if (role.includes("post:create-post")) {
+                navigation.replace("AdminBottomTabNav");
               }
-              else (navigation.replace("AdminBottomTabNav"))
+              else (navigation.replace("BottomTabNav"))
             })
             .catch(function (error) {
               console.log(error);
