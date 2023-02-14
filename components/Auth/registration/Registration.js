@@ -33,7 +33,7 @@ const Register = ({ navigation }) => {
 
     var role = {
       Name: "custom:userRole",
-      Value: "admin",
+      Value: "observer",
     };
 
     var dataname = {
@@ -58,9 +58,10 @@ const Register = ({ navigation }) => {
           return;
         }
         var cognitoUser = result.user;
-        console.log("user name is " + cognitoUser.getUsername());
+        var emailID = cognitoUser.getUsername();
+        console.log("user name is " + emailID);
         alert("Registration Successful");
-        navigation.replace("LoginScreen");
+        navigation.navigate("OTPscreen", { email:emailID } );
       }
     );
   };
@@ -167,7 +168,7 @@ const Register = ({ navigation }) => {
             </View>
 
             {/* confirm password */}
-            <View className="flex flex-col ">
+            {/* <View className="flex flex-col ">
               <Text className="text-base font-normal">Confirm Password</Text>
               <View className="flex flex-row bg-gray-200 w-auto items-center px-2.5 py-2.5 active:border rounded-md my-2">
                 <MaterialCommunityIcons
@@ -183,7 +184,7 @@ const Register = ({ navigation }) => {
                   onChangeText={setConfirmpass}
                 />
               </View>
-            </View>
+            </View> */}
 
             <TouchableOpacity className="mt-8">
               <Text

@@ -5,11 +5,13 @@ import {
   View,
   Button,
   TouchableOpacity,
+  Image
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CognitoUserPool, CookieStorage } from "amazon-cognito-identity-js";
 import { IconButton } from "react-native-paper";
+
 
 var poolData = {
   UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
@@ -62,7 +64,7 @@ const ProfileScreen = ({ navigation }) => {
   // };
   useEffect(() => getUser(setUser), []);
   return (
-    <SafeAreaView className="flex h-full align-middle bg-[#0f7e8d]">
+    <SafeAreaView className="flex h-full align-middle bg-[#fff]">
       <View className="flex flex-row h-18  items-center mx-2 mt-5">
         <TouchableOpacity>
           <IconButton
@@ -74,22 +76,29 @@ const ProfileScreen = ({ navigation }) => {
             }}
           />
         </TouchableOpacity>
-        <Text className="text-xl  text-center">Go Back</Text>
+        <Text className="text-2xl  text-center">Go Back</Text>
       </View>
       <View className="flex flex-grow justify-between p-8">
         {/* <View>
         <Text className="text-center">Profile</Text>
       </View> */}
         <View>
-          <Text className="text-3xl font-medium">Welcome, {user.name}</Text>
+          <Text className="text-3xl font-medium">Welcome, {user.name} !</Text>
+        </View>
+        <View style={styles.welcomeImage} >
+        {/* 
+        <Image source={require('../assests/images/welcome.png')}/>
+       
+       */}
+       <Image style={{width:'100%',height:'100%'}} source={require('../assests/images/welcome.png')}/>
         </View>
         <View>
-          <Text className="text-xl font-normal align-center">
+          <Text className="text-xl ml-8 font-normal align-center">
             You are logged in as {user.role}
           </Text>
         </View>
         <TouchableOpacity className="items-center" onPress={signOut}>
-          <Text className=" w-60 bg-blue-500 font-bold shadow-sm rounded-full p-3 text-white text-lg text-center ">
+          <Text className=" w-60 mt-10 bg-blue-500 font-bold shadow-sm rounded-full p-3 text-white text-lg text-center ">
             Sign out
           </Text>
         </TouchableOpacity>
@@ -100,4 +109,12 @@ const ProfileScreen = ({ navigation }) => {
 
 export default ProfileScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  welcomeImage:{
+    flex:1,
+    // width:'100%',
+    justifyContent:'center',
+    alignItems:'center',
+    
+  }
+});

@@ -19,7 +19,7 @@ const AdminBottomTabNav = () => {
       barStyle={{ backgroundColor: "white" }}
     >
       <Tab.Screen
-        name="home"
+        name="Home"
         component={HomeScreen}
         options={{
           // tabBarLabel: ({ focused }) =>
@@ -30,7 +30,7 @@ const AdminBottomTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="post"
+        name="Post"
         component={Post}
         options={{
           tabBarIcon: ({ color }) => (
@@ -39,7 +39,7 @@ const AdminBottomTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="profile"
+        name="Profile"
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (

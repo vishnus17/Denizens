@@ -5,7 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { Image } from "react-native-elements";
-import { global, setGlobal } from "../../../State/index";
+import axios from "axios";
 
 import {
   AuthenticationDetails,
@@ -71,9 +71,19 @@ const Login = ({ navigation }) => {
           if (err) {
             console.log(err);
           } else {
-            if (attributes[2].getValue() == "observer") {
-              navigation.replace("BottomTabNav");
-            } else navigation.replace("AdminBottomTabNav");
+            axios.get("https://e89qkzfh0g.execute-api.ap-south-1.amazonaws.com/sbx01/getRolePermissions/" + attributes[2].getValue())
+            .then(function (response) {
+              console.log(response.data);
+              const role = JSON.stringify(response.data);
+              console.log(response.data.permissions);
+              if (role.includes("post:create-post")) {
+                navigation.replace("AdminBottomTabNav");
+              }
+              else (navigation.replace("BottomTabNav"))
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
           }
         });
 
@@ -90,6 +100,9 @@ const Login = ({ navigation }) => {
           console.log(sessionUserAttributes);
         });
       },
+
+      // google identity provider
+      
 
       onFailure: function (err) {
         // User authentication was not successful

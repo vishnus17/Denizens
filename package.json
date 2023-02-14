@@ -20,6 +20,7 @@
     "@react-navigation/native-stack": "^6.9.0",
     "amazon-cognito-identity-js": "^5.2.11",
     "aws-sdk": "^2.1238.0",
+    "axios": "^1.3.2",
     "expo": "~46.0.9",
     "expo-checkbox": "^2.2.0",
     "expo-status-bar": "~1.4.0",
@@ -36,10 +37,15 @@
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.7",
+<<<<<<< HEAD
     "react-reduce": "^0.2.0",
     "react-redux": "^8.0.5",
     "redux": "^4.2.1",
     "tailwindcss": "^3.1.8"
+=======
+    "tailwindcss": "^3.1.8",
+    "expo-image-picker": "~13.3.1"
+>>>>>>> 8c6dd630e0d16994c7e988c8140c2ca58ad80992
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
