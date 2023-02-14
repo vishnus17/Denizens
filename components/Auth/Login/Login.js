@@ -5,6 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { Image } from "react-native-elements";
+import axios from "axios";
 
 import {
   AuthenticationDetails,
@@ -42,7 +43,10 @@ const Login = ({ navigation }) => {
         // var accessToken = result.getAccessToken().getJwtToken();
         var idToken = result.getIdToken().getJwtToken();
         // console.log(accessToken);
+        setGlobal("userId", idToken);
         console.log(idToken);
+        console.log("global");
+        console.log(global.userID);
 
         // return user name
         cognitoUser.getUserAttributes(function (err, attributes) {
@@ -67,13 +71,22 @@ const Login = ({ navigation }) => {
           if (err) {
             console.log(err);
           } else {
-            if (attributes[2].getValue() == "admin") {
-              navigation.replace("AdminBottomTabNav");
-            }
-            else (navigation.replace("BottomTabNav"))
+            axios.get("https://e89qkzfh0g.execute-api.ap-south-1.amazonaws.com/sbx01/getRolePermissions/" + attributes[2].getValue())
+            .then(function (response) {
+              console.log(response.data);
+              const role = JSON.stringify(response.data);
+              console.log(response.data.permissions);
+              if (role.includes("post:create-post")) {
+                navigation.replace("AdminBottomTabNav");
+              }
+              else (navigation.replace("BottomTabNav"))
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
           }
         });
-        
+
         // alert("Login Successful");
         var userAttributes = cognitoUser.getUserAttributes(function (
           err,
@@ -87,6 +100,9 @@ const Login = ({ navigation }) => {
           console.log(sessionUserAttributes);
         });
       },
+
+      // google identity provider
+      
 
       onFailure: function (err) {
         // User authentication was not successful

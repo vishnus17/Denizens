@@ -8,6 +8,7 @@ import {
   RegisterScreen,
   ForgotPasswordScreen,
   ChangePasswordScreen,
+  OTPScreen
 } from "../screens";
 import AdminBottomTabNav from "./AdminBottomTabNav";
 import BottomTabNav from "./BottomTabNav";
@@ -22,6 +23,7 @@ const AuthStack = () => {
       <AuthStack.Screen name="SplashScreen" component={SplashScreen} />
       <AuthStack.Screen name="OnboardingScreen" component={OnboardingScreen} />
       <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
+      <AuthStack.Screen name="OTPscreen" component={OTPScreen} />
       <AuthStack.Screen
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}

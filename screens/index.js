@@ -7,3 +7,4 @@ export { default as ForgotPasswordScreen } from "./ForgotPasswordScreen";
 export { default as ChangePasswordScreen } from "./ChangePasswordScreen";
 export { default as ProfileScreen } from "./ProfileScreen";
 export { default as Post } from "./Post";
+export { default as OTPScreen } from "./OTPScreen";
