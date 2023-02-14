@@ -7,16 +7,39 @@ import {
 } from "react-native";
 import { React, useState } from "react";
 import { IconButton } from "react-native-paper";
+import {
+  AuthenticationDetails,
+  CognitoUser,
+  CognitoUserAttribute,
+  CognitoUserPool,
+  CookieStorage,
+} from "amazon-cognito-identity-js";
 
 const ForgotPassword = ({ navigation }) => {
   const [email, onChangeEmail] = useState(null);
   const [OTP, onChangeOTP] = useState(null);
   const [emailerr, setEmailerr] = useState(null);
-  // const validateEmail = () => {
-  //   var re =
-  //     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  //   return re.test(email);
+
+  // var poolData = {
+  //   UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
+  //   ClientId: "3a6g176qng5vtfnul7pm8uv0ek", // Your client id here
   // };
+  // var userPool = new CognitoUserPool(poolData);
+  // CognitoUser.forgotPassword({
+  //   inputVerificationCode: function(data) {
+  //     console.log('Code sent to: ' + data);
+  //     var verificationCode = OTP;
+  //     CognitoUser.confirmPassword(verificationCode, {
+  //       onSuccess() {
+  //         console.log('Email confirmed!');
+  //         handleSubmit()
+  //       },
+  //       onFailure(err) {
+  //         console.log('Email not confirmed!');
+  //       },
+  //     });
+  //   },
+  // });
 
   const validateEmail = () => {
     // return String(email)
@@ -54,7 +77,7 @@ const ForgotPassword = ({ navigation }) => {
       </View>
       <View className="p-6 flex flex-col h-full items-center justify-center absolute">
         {/* <View className={tw`border`}> */}
-        <Text className="mb-7 text-xl">Verify whether its you or not</Text>
+        <Text className="mb-7 text-xl">Verify your identity</Text>
         {/* </View> */}
         <TextInput
           className="p-3 bg-gray-200 active:border w-full mb-2 rounded-lg"
