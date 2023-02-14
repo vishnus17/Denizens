@@ -7,6 +7,7 @@
 //   Image} from "react-native"
 // import React, { useState, useEffect } from "react"
 import * as ImagePicker from "expo-image-picker"
+import CheckBox from "expo-checkbox"
 
 // const Post = () => {
 //   const [image, setImage] = useState("")
@@ -107,6 +108,10 @@ import {
 const Post = () => {
   const [postText, setPostText] = useState("")
   const [postImage, setPostImage] = useState(null)
+  const [checkbox, setCheckbox] = useState([false, false, false])
+  const [isVisible, setIsVisible] = useState(false)
+
+  const viewOptions = ["All", "Followers", "Tagged"]
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -126,10 +131,25 @@ const Post = () => {
   }
   return (
     <View style={styles.container}>
-      <View >
-        <Text className="text-2xl mx-5 my-3">New post</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          alignContent: "space-between",
+        }}
+      >
+        <View>
+          <Text className="text-2xl mx-5 my-3">New post</Text>
+        </View>
+
+        <TouchableOpacity
+          style={[
+            styles.postButton,
+            { maxHeight: 40, marginRight: 60, maxWidth: 130 },
+          ]}
+        >
+          <Text style={styles.postButtonText}>Post</Text>
+        </TouchableOpacity>
       </View>
-    
       <TouchableOpacity
         style={styles.postImageContainer}
         onPress={() => {
@@ -150,10 +170,49 @@ const Post = () => {
         onChangeText={(text) => setPostText(text)}
       />
 
+      <TextInput
+        style={styles.postTextInput}
+        placeholder="Tag People"
+        value={postText}
+        onChangeText={(text) => setPostText(text)}
+      />
 
-      <TouchableOpacity style={styles.postButton}>
-        <Text style={styles.postButtonText}>Post</Text>
+      <TextInput
+        style={styles.postTextInput}
+        placeholder="Add Location"
+        value={postText}
+        onChangeText={(text) => setPostText(text)}
+      />
+      <TouchableOpacity
+        style={styles.postButton}
+        onPress={() => setIsVisible(!isVisible)}
+      >
+        <Text style={styles.postButtonText}>View to</Text>
       </TouchableOpacity>
+      {isVisible &&
+        viewOptions.map((view, idx) => {
+          return (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                alignContent: "space-between",
+              }}
+            >
+              <CheckBox
+                value={checkbox[idx]}
+                onValueChange={(newVal) => {
+                  checkbox[idx] = newVal
+                }}
+              />
+              <Text>{view}</Text>
+            </View>
+          )
+        })}
+
+      {/* <TouchableOpacity style={styles.postButton}>
+        <Text style={styles.postButtonText}>Post</Text>
+      </TouchableOpacity> */}
     </View>
   )
 }
@@ -190,8 +249,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#0095f6",
     padding: 10,
     borderRadius: 20,
-    width:200,
-    marginLeft:54,
+    width: 200,
+    marginLeft: 54,
     alignItems: "center",
   },
   postButtonText: {
