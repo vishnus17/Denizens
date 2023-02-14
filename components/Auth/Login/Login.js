@@ -5,6 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { Image } from "react-native-elements";
+import { global, setGlobal } from "../../../State/index";
 
 import {
   AuthenticationDetails,
@@ -42,7 +43,10 @@ const Login = ({ navigation }) => {
         // var accessToken = result.getAccessToken().getJwtToken();
         var idToken = result.getIdToken().getJwtToken();
         // console.log(accessToken);
+        setGlobal("userId", idToken);
         console.log(idToken);
+        console.log("global");
+        console.log(global.userID);
 
         // return user name
         cognitoUser.getUserAttributes(function (err, attributes) {
@@ -69,11 +73,10 @@ const Login = ({ navigation }) => {
           } else {
             if (attributes[2].getValue() == "observer") {
               navigation.replace("BottomTabNav");
-            }
-            else (navigation.replace("AdminBottomTabNav"))
+            } else navigation.replace("AdminBottomTabNav");
           }
         });
-        
+
         // alert("Login Successful");
         var userAttributes = cognitoUser.getUserAttributes(function (
           err,

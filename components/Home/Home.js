@@ -11,7 +11,7 @@ const Home = () => {
   }));
   return (
     <View className="flex-1 bg-white">
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="dark" />
       <Header />
       <ScrollView
         pinchGestureEnabled={false}
