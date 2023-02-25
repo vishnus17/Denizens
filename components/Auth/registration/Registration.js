@@ -24,8 +24,8 @@ const Register = ({ navigation }) => {
 
   const handleRegister = () => {
     var poolData = {
-      UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
-      ClientId: "3a6g176qng5vtfnul7pm8uv0ek", // Your client id here
+      UserPoolId: ${{ secrets.UserPoolId }}, // Your user pool id here
+      ClientId: , ${{ secrets.ClientId }} // Your client id here
     };
     var userPool = new CognitoUserPool(poolData);
     var name = firstname + " " + lastname;
