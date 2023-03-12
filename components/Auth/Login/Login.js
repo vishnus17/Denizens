@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
     var authenticationDetails = new AuthenticationDetails(authenticationData);
     var poolData = {
       UserPoolId: ${{ secrets.UserPoolId }}, // Your user pool id here
-      ClientId: , ${{ secrets.ClientId }} // Your client id here
+      ClientId: ${{ secrets.ClientId }} // Your client id here
     }
     var userPool = new CognitoUserPool(poolData);
     var userData = {
