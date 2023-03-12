@@ -68,7 +68,7 @@ const Login = ({ navigation }) => {
           if (err) {
             console.log(err);
           } else {
-            axios.get("https://e89qkzfh0g.execute-api.ap-south-1.amazonaws.com/sbx01/getRolePermissions/" + attributes[2].getValue())
+            axios.get(${{ secrets.ApiURL }} + attributes[2].getValue())
             .then(function (response) {
               console.log(response.data);
               const role = JSON.stringify(response.data);
