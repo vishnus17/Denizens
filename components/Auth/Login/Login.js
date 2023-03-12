@@ -28,8 +28,8 @@ const Login = ({ navigation }) => {
     };
     var authenticationDetails = new AuthenticationDetails(authenticationData);
     var poolData = {
-      UserPoolId: ${{ secrets.UserPoolId }}, // Your user pool id here
-      ClientId: ${{ secrets.ClientId }} // Your client id here
+      UserPoolId: process.env.USERPOOL_ID, // Your user pool id here
+      ClientId: process.env.CLIENT_ID // Your client id here
     }
     var userPool = new CognitoUserPool(poolData);
     var userData = {
@@ -68,7 +68,7 @@ const Login = ({ navigation }) => {
           if (err) {
             console.log(err);
           } else {
-            axios.get(${{ secrets.ApiURL }} + attributes[2].getValue())
+            axios.get(process.env.API_URL + attributes[2].getValue())
             .then(function (response) {
               console.log(response.data);
               const role = JSON.stringify(response.data);

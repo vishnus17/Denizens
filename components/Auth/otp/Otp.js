@@ -19,10 +19,10 @@ import {
     const [OTP, onChangeOTP] = useState(null);
     const {email} = route.params;
     const handleSubmit = () => {
-    var poolData = {
-      UserPoolId: ${{ secrets.UserPoolId }}, // Your user pool id here
-      ClientId: ${{ secrets.ClientId }} // Your client id here
-    }
+      var poolData = {
+        UserPoolId: process.env.USERPOOL_ID, // Your user pool id here
+        ClientId: process.env.CLIENT_ID // Your client id here
+      }
       var userPool = new CognitoUserPool(poolData);
       var userData = {
         Username: email,
