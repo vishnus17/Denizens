@@ -43,7 +43,7 @@ const Login = ({ navigation }) => {
         // var accessToken = result.getAccessToken().getJwtToken();
         var idToken = result.getIdToken().getJwtToken();
         // console.log(accessToken);
-        setGlobal("userId", idToken);
+        // setGlobal("userId", idToken);
         console.log(idToken);
         console.log("global");
         console.log(global.userID);
@@ -71,19 +71,22 @@ const Login = ({ navigation }) => {
           if (err) {
             console.log(err);
           } else {
-            axios.get("https://e89qkzfh0g.execute-api.ap-south-1.amazonaws.com/sbx01/getRolePermissions/" + attributes[2].getValue())
-            .then(function (response) {
-              console.log(response.data);
-              const role = JSON.stringify(response.data);
-              console.log(response.data.permissions);
-              if (role.includes("post:create-post")) {
-                navigation.replace("AdminBottomTabNav");
-              }
-              else (navigation.replace("BottomTabNav"))
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
+            axios
+              .get(
+                "https://e89qkzfh0g.execute-api.ap-south-1.amazonaws.com/sbx01/getRolePermissions/" +
+                  attributes[2].getValue()
+              )
+              .then(function (response) {
+                console.log(response.data);
+                const role = JSON.stringify(response.data);
+                console.log(response.data.permissions);
+                if (role.includes("post:create-post")) {
+                  navigation.replace("AdminBottomTabNav");
+                } else navigation.replace("BottomTabNav");
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
           }
         });
 
@@ -102,7 +105,6 @@ const Login = ({ navigation }) => {
       },
 
       // google identity provider
-      
 
       onFailure: function (err) {
         // User authentication was not successful
