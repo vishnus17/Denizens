@@ -5,6 +5,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { Image } from "react-native-elements";
+import db from "../../../firebase";
+import { setDoc, doc } from "firebase/firestore";
 import {
   AuthenticationDetails,
   CognitoUser,
@@ -12,17 +14,20 @@ import {
   CognitoUserPool,
   CookieStorage,
 } from "amazon-cognito-identity-js";
+import { useEffect } from "react";
+import { set } from "react-hook-form";
 
 const region = "ap-south-1";
 
 const Register = ({ navigation }) => {
+  const [loading, setLoading] = useState(null);
   const [firstname, setFirstName] = useState();
   const [lastname, setLastName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmpass, setConfirmpass] = useState();
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     var poolData = {
       UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
       ClientId: "3a6g176qng5vtfnul7pm8uv0ek", // Your client id here
@@ -46,8 +51,10 @@ const Register = ({ navigation }) => {
 
     var attributeName = new CognitoUserAttribute(dataname);
     attributeList.push(attributeName);
+    console.log(attributeName);
+    console.log(attributeList);
 
-    userPool.signUp(
+    await userPool.signUp(
       email,
       password,
       attributeList,
@@ -57,11 +64,28 @@ const Register = ({ navigation }) => {
           alert(err.message || JSON.stringify(err));
           return;
         }
+        console.log("result", result);
         var cognitoUser = result.user;
-        var emailID = cognitoUser.getUsername();
-        console.log("user name is " + emailID);
-        alert("Registration Successful");
-        navigation.navigate("OTPscreen", { email:emailID } );
+
+        const docData = {
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+        };
+
+        setDoc(doc(db, "users", email), docData).then(() => {
+          var emailID = cognitoUser.getUsername();
+          console.log("user name is " + emailID);
+          alert("Registration Successful");
+          navigation.navigate("OTPscreen", { email: emailID });
+        });
+        // cognitoUser.getUserAttributes((err, attributes) => {
+        //   if (err) {
+        //     console.log(err);
+        //   } else {
+        //     console.log("attributes", attributes[0].Value);
+        //   }
+        // });
       }
     );
   };
@@ -69,6 +93,8 @@ const Register = ({ navigation }) => {
   const handleLoginClick = () => {
     navigation.replace("LoginScreen");
   };
+
+  useEffect(() => {}, [loading]);
 
   return (
     <View className="h-full bg-white">

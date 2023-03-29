@@ -7,9 +7,13 @@ import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 import Header from "../components/Header";
-const Tab = createMaterialBottomTabNavigator();
+import { useSelector } from "react-redux";
 
 const BottomTabNav = () => {
+  const Tab = createMaterialBottomTabNavigator();
+  const logedIn = useSelector((state) => state.reducer.user.logedIn);
+  const role = useSelector((state) => state.reducer.user.role);
+  // console.log("from bottomTabNav", logedIn, role);
   return (
     <Tab.Navigator
       labeled={true}
@@ -29,6 +33,18 @@ const BottomTabNav = () => {
           ),
         }}
       />
+      {logedIn && role.includes("post:create-post") === true && (
+        <Tab.Screen
+          name="Post"
+          component={Post}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="add-circle" size={24} color={color}></Ionicons>
+            ),
+          }}
+        />
+      )}
+
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
