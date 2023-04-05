@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { Image } from "react-native-elements";
 import db from "../../../firebase";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import {
   AuthenticationDetails,
   CognitoUser,
@@ -71,6 +71,8 @@ const Register = ({ navigation }) => {
           firstname: firstname,
           lastname: lastname,
           email: email,
+          avathar: "",
+          timestamp: serverTimestamp(),
         };
 
         setDoc(doc(db, "users", email), docData).then(() => {

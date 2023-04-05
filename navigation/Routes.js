@@ -6,7 +6,7 @@ import AuthStack from "./AuthStack";
 import BottomTabNav from "./BottomTabNav";
 
 const Routes = () => {
-  const logedIn = useSelector((state) => state.reducer.user.logedIn);
+  const logedIn = useSelector((state) => state.user.user.logedIn);
   const Routes = createNativeStackNavigator();
   return (
     <Routes.Navigator

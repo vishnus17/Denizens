@@ -6,7 +6,7 @@
 //   TouchableOpacity,
 //   Image} from "react-native"
 // import React, { useState, useEffect } from "react"
-import * as ImagePicker from "expo-image-picker"
+import * as ImagePicker from "expo-image-picker";
 
 // const Post = () => {
 //   const [image, setImage] = useState("")
@@ -18,15 +18,15 @@ const pickImage = async () => {
     allowsEditing: true,
     aspect: [4, 3],
     quality: 1,
-  })
+  });
 
-  console.log(result.uri)
+  console.log(result.uri);
 
   if (result) {
-    setImage(result.uri)
-    console.log(result.uri)
+    setImage(result.uri);
+    console.log(result.uri);
   }
-}
+};
 
 //   // useEffect(() => {
 //   //   console.log(image)
@@ -94,7 +94,7 @@ const pickImage = async () => {
 
 // export default Post
 
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -102,11 +102,11 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
-} from "react-native"
+} from "react-native";
 
 const Post = () => {
-  const [postText, setPostText] = useState("")
-  const [postImage, setPostImage] = useState(null)
+  const [postText, setPostText] = useState("");
+  const [postImage, setPostImage] = useState(null);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -115,25 +115,25 @@ const Post = () => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-    })
+    });
 
-    console.log(result.uri)
+    console.log(result.uri);
 
     if (result) {
-      setPostImage(result.uri)
-      console.log(result.uri)
+      setPostImage(result.uri);
+      console.log(result.uri);
     }
-  }
+  };
   return (
     <View style={styles.container}>
-      <View >
+      <View>
         <Text className="text-2xl mx-5 my-3">New post</Text>
       </View>
-    
+
       <TouchableOpacity
         style={styles.postImageContainer}
         onPress={() => {
-          pickImage()
+          pickImage();
         }}
       >
         {postImage ? (
@@ -150,13 +150,12 @@ const Post = () => {
         onChangeText={(text) => setPostText(text)}
       />
 
-
       <TouchableOpacity style={styles.postButton}>
         <Text style={styles.postButtonText}>Post</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -190,13 +189,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#0095f6",
     padding: 10,
     borderRadius: 20,
-    width:200,
-    marginLeft:54,
+    width: 200,
+    marginLeft: 54,
     alignItems: "center",
   },
   postButtonText: {
     color: "#fff",
   },
-})
+});
 
-export default Post
+export default Post;

@@ -1,7 +1,8 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import { HomeScreen, Post, ProfileScreen } from "../screens";
+import { HomeScreen, ProfileScreen } from "../screens";
+import { Post } from "../screens/Actions";
 
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,8 +12,8 @@ import { useSelector } from "react-redux";
 
 const BottomTabNav = () => {
   const Tab = createMaterialBottomTabNavigator();
-  const logedIn = useSelector((state) => state.reducer.user.logedIn);
-  const role = useSelector((state) => state.reducer.user.role);
+  const logedIn = useSelector((state) => state.user.user.logedIn);
+  const roles = useSelector((state) => state.user.user.roles);
   // console.log("from bottomTabNav", logedIn, role);
   return (
     <Tab.Navigator
@@ -33,7 +34,7 @@ const BottomTabNav = () => {
           ),
         }}
       />
-      {logedIn && role.includes("post:create-post") === true && (
+      {logedIn && roles.includes("post:create-post") === true && (
         <Tab.Screen
           name="Post"
           component={Post}

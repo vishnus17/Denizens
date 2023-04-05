@@ -2,6 +2,7 @@ const initialState = {
   user: {
     tokenID: null,
     attributes: "",
+    roles: "",
     role: "",
     logedIn: Boolean(false),
     email: "",
@@ -27,6 +28,8 @@ export default reducer = (state = initialState, action) => {
 
         user: action.payload.user,
       };
+    case "LOGOUT":
+      return initialState;
     default:
       return state;
   }

@@ -25,9 +25,9 @@ const region = "ap-south-1";
 const Login = ({ navigation }) => {
   // const { token, setToken } = useContext(AuthContext);
   const dispatch = useDispatch();
-  const tokenID = useSelector((state) => state.reducer.user.tokenID);
-  const user = useSelector((state) => state.reducer.user);
-  const role = useSelector((state) => state.reducer.user.role);
+  const tokenID = useSelector((state) => state.user.user.tokenID);
+  const user = useSelector((state) => state.user.user);
+  const role = useSelector((state) => state.user.user.role);
 
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -75,6 +75,8 @@ const Login = ({ navigation }) => {
           if (err) {
             console.log(err);
           } else {
+            console.log("role", attributes[2].getValue());
+            const role = attributes[2].getValue();
             //   Alert.alert(
             //     "Welcome" + " " + attributes[3].getValue(),
             //     "You have successfully logged in",
@@ -97,7 +99,7 @@ const Login = ({ navigation }) => {
               .then(async function (response) {
                 console.log(response.data);
 
-                const role = JSON.stringify(response.data);
+                const roles = JSON.stringify(response.data);
                 console.log(response.data.permissions);
 
                 const userInfo = await getDoc(doc(db, "users", username));
@@ -116,6 +118,7 @@ const Login = ({ navigation }) => {
                     attributes: attributes,
                     email: username,
                     role: role,
+                    roles: roles,
                   },
                 };
                 await dispatch(LoginSuccess(currenState));
