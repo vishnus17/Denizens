@@ -10,6 +10,7 @@ const initialState = {
       firstname: "",
       lastname: "",
       email: "",
+      avathar: "",
     },
   },
 };

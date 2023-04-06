@@ -14,7 +14,6 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const state = useSelector((state) => state.reducer);
   // console.log(state);
   // const users = collection(db, "users");
   // console.log(users);

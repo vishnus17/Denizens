@@ -14,6 +14,7 @@ import { CognitoUserPool, CookieStorage } from "amazon-cognito-identity-js";
 import { IconButton } from "react-native-paper";
 import { useSelector, useDispatch } from "react-redux";
 import { Logout } from "../State/actions";
+import { Profile } from "../components/Actions";
 
 // var poolData = {
 //   UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
@@ -76,64 +77,66 @@ const ProfileScreen = ({ navigation }) => {
   // };
 
   return (
-    <SafeAreaView className="flex h-full align-middle bg-[#fff]">
-      <View className="flex flex-row h-18  items-center mx-2 mt-5">
-        <TouchableOpacity>
-          <IconButton
-            icon="chevron-left"
-            size={28}
-            className="ml-1 flex-none "
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
-        </TouchableOpacity>
-        <Text className="text-2xl  text-center">Go Back</Text>
-      </View>
-      <View className="flex flex-grow justify-between p-8">
-        {/* <View>
-        <Text className="text-center">Profile</Text>
-      </View> */}
-        <View>
-          <Text className="text-3xl font-medium">
-            Welcome, {user?.userInfo?.firstname} !
-          </Text>
-        </View>
-        <View style={styles.welcomeImage}>
-          {/* 
-        <Image source={require('../assests/images/welcome.png')}/>
-       
-       */}
-          <Image
-            style={{ width: "100%", height: "100%" }}
-            source={require("../assests/images/welcome.png")}
-          />
-        </View>
-        <View>
-          <Text className="text-xl ml-8 font-normal align-center">
-            You are logged in as {user.role}
-          </Text>
-        </View>
-        <TouchableOpacity
-          className="items-center"
-          onPress={!BtnLoading && signOut}
-        >
-          <Text className=" w-60 mt-10 bg-blue-500 font-bold shadow-sm rounded-full p-3 text-white text-lg text-center ">
-            Sign out
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <Profile navigation={navigation} />
+
+    // <SafeAreaView className="flex h-full align-middle bg-[#fff]">
+    //   <View className="flex flex-row h-18  items-center mx-2 mt-5">
+    //     <TouchableOpacity>
+    //       <IconButton
+    //         icon="chevron-left"
+    //         size={28}
+    //         className="ml-1 flex-none "
+    //         onPress={() => {
+    //           navigation.goBack();
+    //         }}
+    //       />
+    //     </TouchableOpacity>
+    //     <Text className="text-2xl  text-center">Go Back</Text>
+    //   </View>
+    //   <View className="flex flex-grow justify-between p-8">
+    //     {/* <View>
+    //     <Text className="text-center">Profile</Text>
+    //   </View> */}
+    //     <View>
+    //       <Text className="text-3xl font-medium">
+    //         Welcome, {user?.userInfo?.firstname} !
+    //       </Text>
+    //     </View>
+    //     <View style={styles.welcomeImage}>
+    //       {/*
+    //     <Image source={require('../assests/images/welcome.png')}/>
+
+    //    */}
+    //       <Image
+    //         style={{ width: "100%", height: "100%" }}
+    //         source={require("../assests/images/welcome.png")}
+    //       />
+    //     </View>
+    //     <View>
+    //       <Text className="text-xl ml-8 font-normal align-center">
+    //         You are logged in as {user.role}
+    //       </Text>
+    //     </View>
+    //     <TouchableOpacity
+    //       className="items-center"
+    //       onPress={!BtnLoading && signOut}
+    //     >
+    //       <Text className=" w-60 mt-10 bg-blue-500 font-bold shadow-sm rounded-full p-3 text-white text-lg text-center ">
+    //         Sign out
+    //       </Text>
+    //     </TouchableOpacity>
+    //   </View>
+    // </SafeAreaView>
   );
 };
 
 export default ProfileScreen;
 
-const styles = StyleSheet.create({
-  welcomeImage: {
-    flex: 1,
-    // width:'100%',
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+// const styles = StyleSheet.create({
+//   welcomeImage: {
+//     flex: 1,
+//     // width:'100%',
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+// });
