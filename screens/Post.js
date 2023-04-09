@@ -10,6 +10,8 @@ import * as ImagePicker from "expo-image-picker";
 
 // const Post = () => {
 //   const [image, setImage] = useState("")
+import * as ImagePicker from "expo-image-picker"
+import CheckBox from "expo-checkbox"
 
 const pickImage = async () => {
   // No permissions request is necessary for launching the image library
@@ -95,6 +97,8 @@ const pickImage = async () => {
 // export default Post
 
 import React, { useState } from "react";
+}
+import React, { useState } from "react"
 import {
   View,
   Text,
@@ -153,6 +157,41 @@ const Post = () => {
       <TouchableOpacity style={styles.postButton}>
         <Text style={styles.postButtonText}>Post</Text>
       </TouchableOpacity>
+      {isVisible &&
+        viewOptions.map((view, idx) => {
+          return (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                alignContent: "space-between",
+                padding: 10,
+              }}
+            >
+              <CheckBox
+                value={checkbox[idx]}
+                onValueChange={(newVal) => {
+                  checkbox[idx] = newVal;
+                }}
+              />
+              <Text
+                style={{
+                  // alignContent: "space-around",
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  padding: 4,
+                }}
+              >
+                {view}
+              </Text>
+            </View>
+          );
+        })}
+
+      {/* <TouchableOpacity style={styles.postButton}>
+        <Text style={styles.postButtonText}>Post</Text>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -189,6 +228,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#0095f6",
     padding: 10,
     borderRadius: 20,
+    width: 200,
+    marginLeft: 54,
     width: 200,
     marginLeft: 54,
     alignItems: "center",
