@@ -18,8 +18,8 @@ jobs:
           node-version: 16.x
           cache: npm
 
-      - name: 🏗 Setup Expo
-        uses: expo/expo-github-action@v7
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
         with:
           expo-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
@@ -29,6 +29,15 @@ jobs:
       
       - name: Install Expo Updates
         run: npm install expo-updates
+        
+      - name: 🚀 Create preview
+        uses: expo/expo-github-action/preview@v8
+        with:
+          command: eas update --auto
+        env:
+          USERPOOL_ID: ${{ secrets.UserPoolId }}
+          CLIENT_ID: ${{ secrets.ClientId }}
+          API_URL: ${{ secrets.ApiURL }}
         
       - name: 🚀 Publish preview
         run: expo publish --release-channel=pr-${{ github.event.number }} --non-interactive
