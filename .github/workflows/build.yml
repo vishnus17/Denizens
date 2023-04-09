@@ -1,6 +1,4 @@
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [ main ]
     types: [opened, synchronize, reopened]
@@ -27,10 +25,14 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: 📦 Install dependencies
-        run: npm install
-       
-      - name: 🚀 Create preview
-        uses: expo/expo-github-action/preview@v8
+      - name: 🚀 Publish preview
+        run: expo publish --release-channel=pr-${{ github.event.number }} --non-interactive
+        env:
+          USERPOOL_ID: ${{ secrets.UserPoolId }}
+          CLIENT_ID: ${{ secrets.ClientId }}
+          API_URL: ${{ secrets.ApiURL }}
+
+      - name: 💬 Comment preview
+        uses: expo/expo-github-action/preview-comment@v7
         with:
-          command: eas update --auto
+          channel: pr-${{ github.event.number }}
