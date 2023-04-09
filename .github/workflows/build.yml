@@ -8,6 +8,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: 🏗 Setup repo
         uses: actions/checkout@v3
@@ -27,25 +29,8 @@ jobs:
 
       - name: 📦 Install dependencies
         run: npm install
-      
-      - name: Install Expo Updates
-        run: npm install expo-updates
-        
+       
       - name: 🚀 Create preview
         uses: expo/expo-github-action/preview@v8
-        env:
-          USERPOOL_ID: ${{ secrets.UserPoolId }}
-          CLIENT_ID: ${{ secrets.ClientId }}
-          API_URL: ${{ secrets.ApiURL }}
-        
-      - name: 🚀 Publish preview
-        run: expo publish --release-channel=pr-${{ github.event.number }} --non-interactive
-        env:
-          USERPOOL_ID: ${{ secrets.UserPoolId }}
-          CLIENT_ID: ${{ secrets.ClientId }}
-          API_URL: ${{ secrets.ApiURL }}
-
-      - name: 💬 Comment preview
-        uses: expo/expo-github-action/preview-comment@v7
         with:
-          channel: pr-${{ github.event.number }}
+          command: eas update --auto
