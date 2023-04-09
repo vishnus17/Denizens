@@ -9,6 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
+import ProfileStack from "./ProfileStack";
 
 const BottomTabNav = () => {
   const Tab = createMaterialBottomTabNavigator();
@@ -48,7 +49,7 @@ const BottomTabNav = () => {
 
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={ProfileStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Entypo name="user" size={24} color={color} />

@@ -6,11 +6,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { Logout } from "../../State/actions";
 import { Alert } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
+  const [image, setImage] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
+
+  // sign out
   const signOut = async () => {
     setButtonLoading(true);
     await dispatch(Logout());
@@ -18,6 +23,12 @@ const Profile = ({ navigation }) => {
 
     setButtonLoading(false);
   };
+
+  // on clicl edit
+  const onEdit = () => {
+    navigation.navigate("EditProfile");
+  };
+
   return (
     <View className="h-full w-full bg-white flex flex-col items-center justify-between">
       <View className="w-full">
@@ -32,7 +43,7 @@ const Profile = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             className="px-4 py-2 bg-cyan-600 mx-2 rounded-md"
-            //   onPress={signOut}
+            onPress={onEdit}
           >
             <Text className="text-base text-gray-50 font-semibold">Edit</Text>
           </TouchableOpacity>
@@ -40,16 +51,16 @@ const Profile = ({ navigation }) => {
 
         <View className="flex flex-col items-center justify-center mt-10">
           <View className="flex flex-row    w-full items-center justify-center p-2">
-            <TouchableOpacity className="border-2 border-orange-50 rounded-full p-3">
+            <TouchableOpacity className="border-2 border-orange-50 rounded-full">
               {user.userInfo.avathar === "" ? (
                 <Image
                   resizeMode="contain"
-                  className="h-[100] w-[100] rounder-full    overflow-hidden"
+                  style={{ borderRadius: 100, height: 120, width: 120 }}
                   source={require("../../assests/images/EmptyProfile2.png")}
                 ></Image>
               ) : (
                 <Image
-                  className="h-[100] w-[100] rounder-full"
+                  style={{ borderRadius: 100, height: 120, width: 120 }}
                   source={{ uri: user.userInfo.avathar }}
                 ></Image>
               )}

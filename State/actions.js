@@ -1,6 +1,8 @@
 // import { collection, getDoc } from "firebase/firestore";
 // import db from "../firebase";
 import { useDispatch } from "react-redux";
+import { getDoc, doc } from "firebase/firestore";
+import db from "../firebase";
 
 // export const LoginRequest = (payload) => {
 //   const dispatch = useDispatch();
@@ -39,5 +41,19 @@ export const StoreFeeds = (payload) => {
   return {
     type: "store",
     payload: payload,
+  };
+};
+
+export const ProfileEdit = (payload) => {
+  return {
+    type: "",
+    payload: payload,
+  };
+};
+
+export const RefreshState = async () => {
+  return {
+    type: "AUTHENTICATION",
+    payload: currenState,
   };
 };

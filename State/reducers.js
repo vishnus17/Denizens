@@ -1,3 +1,5 @@
+import { users } from "../components/Home/Dummy/data";
+
 const initialState = {
   user: {
     tokenID: null,
@@ -31,6 +33,16 @@ export default reducer = (state = initialState, action) => {
       };
     case "LOGOUT":
       return initialState;
+
+    case "PROFILE_EDIT":
+      return {
+        ...state, //copy all previous states
+
+        user: {
+          ...state.user,
+          userInfo: action.payload.userInfo,
+        },
+      };
     default:
       return state;
   }

@@ -38,9 +38,14 @@ const FeedHeader = ({ userData }) => {
       style={styles.header}
     >
       <View className="flex-row align-middle" style={styles.headerLeft}>
-        <TouchableOpacity className="rounded-full h-[48] w-[48] mr-[8] border border-gray-400 p-1">
+        <TouchableOpacity className="rounded-full h-[52] w-[52] mr-[8] border border-gray-200">
           {userData.avathar != "" ? (
-            <Image style={styles.avatar} source={{ uri: userData.avatar }} />
+            <Image
+              source={{ uri: userData.avathar }}
+              resizeMethod="resize"
+              resizeMode="contain"
+              style={{ borderRadius: 100, height: "100%", width: "100%" }}
+            />
           ) : (
             <Image
               resizeMethod="resize"
