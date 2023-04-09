@@ -24,7 +24,13 @@ jobs:
           expo-version: latest
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
-
+      
+      - name: 📦 Install dependencies
+        run: npm install
+      
+      - name: Install Expo Updates
+        run: npm install expo-updates
+        
       - name: 🚀 Publish preview
         run: expo publish --release-channel=pr-${{ github.event.number }} --non-interactive
         env:
