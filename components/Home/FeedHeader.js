@@ -2,15 +2,20 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
+import db from "../../firebase";
 
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect } from "react";
+import { useState } from "react";
+import { TouchableOpacity } from "react-native";
 const styles = StyleSheet.create({
   username: {
     fontWeight: "500",
     fontSize: 16,
   },
   avatar: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     borderRadius: 20,
     marginRight: 8,
   },
@@ -26,15 +31,34 @@ const styles = StyleSheet.create({
   },
 });
 
-const FeedHeader = ({ avatar, username }) => {
+const FeedHeader = ({ userData }) => {
   return (
     <View
       className="flex-row p-[7] align-middle justify-between h-max"
       style={styles.header}
     >
       <View className="flex-row align-middle" style={styles.headerLeft}>
-        <Image style={styles.avatar} source={avatar} />
-        <Text className="text-base font-medium">{username}</Text>
+        <TouchableOpacity className="rounded-full h-[52] w-[52] mr-[8] border border-gray-200">
+          {userData.avathar != "" ? (
+            <Image
+              source={{ uri: userData.avathar }}
+              resizeMethod="resize"
+              resizeMode="contain"
+              style={{ borderRadius: 100, height: "100%", width: "100%" }}
+            />
+          ) : (
+            <Image
+              resizeMethod="resize"
+              resizeMode="contain"
+              className="h-full w-full"
+              source={require("../../assests/images/EmptyProfile2.png")}
+            />
+          )}
+        </TouchableOpacity>
+
+        <Text className="text-base font-medium">
+          {userData.firstname + " " + userData.lastname}
+        </Text>
       </View>
       <Icon name="more-horizontal" size={24} />
     </View>

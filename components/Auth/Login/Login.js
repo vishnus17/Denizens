@@ -1,11 +1,15 @@
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
-import { React, useState, useEffect } from "react";
-import Input from "./Input";
+import { React, useState, useEffect, useContext } from "react";
+// import Input from "./Input";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { Image } from "react-native-elements";
 import axios from "axios";
+// import { AuthContext } from "../../../State";
+import { useDispatch, useSelector } from "react-redux";
+import { collection, getDoc, doc } from "firebase/firestore";
+import db from "../../../firebase";
 
 import {
   AuthenticationDetails,
@@ -14,14 +18,30 @@ import {
   CognitoUserPool,
   CookieStorage,
 } from "amazon-cognito-identity-js";
+import { LoginRequest, LoginSuccess } from "../../../State/actions";
 
 const region = "ap-south-1";
 
 const Login = ({ navigation }) => {
+  // const { token, setToken } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const tokenID = useSelector((state) => state.user.user.tokenID);
+  const user = useSelector((state) => state.user.user);
+  const role = useSelector((state) => state.user.user.role);
+
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
+  // const [attr, setAttr] = useState(null);
+  // const [details, setDetails] = useState({
+  //   id: null,
+  //   attributes: null,
+  //   key: null,
+  // });
+
+  const handleLogin = async () => {
+    setLoading(true);
     var authenticationData = {
       Username: username,
       Password: password,
@@ -29,8 +49,8 @@ const Login = ({ navigation }) => {
     var authenticationDetails = new AuthenticationDetails(authenticationData);
     var poolData = {
       UserPoolId: process.env.USERPOOL_ID, // Your user pool id here
-      ClientId: process.env.CLIENT_ID // Your client id here
-    }
+      ClientId: process.env.CLIENT_ID, // Your client id here
+    };
     var userPool = new CognitoUserPool(poolData);
     var userData = {
       Username: username,
@@ -41,65 +61,138 @@ const Login = ({ navigation }) => {
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: function (result) {
         // var accessToken = result.getAccessToken().getJwtToken();
-        var idToken = result.getIdToken().getJwtToken();
+
+        const idToken = result.getIdToken().getJwtToken();
         // console.log(accessToken);
+        // setGlobal("userId", idToken);
         console.log(idToken);
+        console.log("global");
+        console.log(global.userID);
+        // setId(idToken);
 
         // return user name
         cognitoUser.getUserAttributes(function (err, attributes) {
           if (err) {
             console.log(err);
           } else {
-            Alert.alert(
-              "Welcome" + " " + attributes[3].getValue(),
-              "You have successfully logged in",
-              [
-                {
-                  text: "OK",
-                  onPress: () => console.log("OK Pressed"),
-                  style: "cancel",
-                },
-              ],
-              { cancelable: false }
-            );
+            console.log("role", attributes[2].getValue());
+            const role = attributes[2].getValue();
+            //   Alert.alert(
+            //     "Welcome" + " " + attributes[3].getValue(),
+            //     "You have successfully logged in",
+            //     [
+            //       {
+            //         text: "OK",
+            //         onPress: () => console.log("OK Pressed"),
+            //         style: "cancel",
+            //       },
+            //     ],
+            //     { cancelable: false }
+            //   );
+            console.log("attributes", attributes[0].Value);
+
+            axios
+              .get(
+                "https://e89qkzfh0g.execute-api.ap-south-1.amazonaws.com/sbx01/getRolePermissions/" +
+                  attributes[2].getValue()
+              )
+              .then(async function (response) {
+                console.log(response.data);
+
+                const roles = JSON.stringify(response.data);
+                console.log(response.data.permissions);
+
+                const userInfo = await getDoc(doc(db, "users", username));
+
+                console.log(
+                  ".....................user...................",
+                  userInfo.data()
+                );
+
+                const currenState = {
+                  user: {
+                    ...user,
+                    userInfo: userInfo.data(),
+                    tokenID: attributes[0].Value,
+                    logedIn: true,
+                    attributes: attributes,
+                    email: username,
+                    role: role,
+                    roles: roles,
+                  },
+                };
+                await dispatch(LoginSuccess(currenState));
+
+                // const payload = {
+                //   ...user,
+                //   tokenID: attributes[0].Value,
+                //   logedIn: true,
+                //   attributes: attributes,
+                //   role: role,
+                // };
+                // dispatch(LoginRequest(payload));
+                // const payload = {
+                //   user: {
+                //     ...user,
+                //     tokenID: attributes[0].Value,
+                //     logedIn: true,
+                //     attributes: attributes,
+                //     role: role,
+                //   },
+                // };
+
+                // dispatch(LoginSuccess(payload));
+                setLoading(false);
+                console.log("im working");
+                console.log(user);
+              })
+              .catch(function (error) {
+                console.log(error);
+                return error;
+              });
+
+            // setAttr(attributes);
           }
         });
-        cognitoUser.getUserAttributes(function (err, attributes) {
-          if (err) {
-            console.log(err);
-          } else {
-            axios.get(process.env.API_URL + attributes[2].getValue())
-            .then(function (response) {
-              console.log(response.data);
-              const role = JSON.stringify(response.data);
-              console.log(response.data.permissions);
-              if (role.includes("post:create-post")) {
-                navigation.replace("AdminBottomTabNav");
-              }
-              else (navigation.replace("BottomTabNav"))
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          }
-        });
-        
+        // cognitoUser.getUserAttributes(function (err, attributes) {
+        //   if (err) {
+        //     console.log(err);
+        //   } else {
+        //     // axios
+        //     //   .get(
+        //     //     "https://e89qkzfh0g.execute-api.ap-south-1.amazonaws.com/sbx01/getRolePermissions/" +
+        //     //       attributes[2].getValue()
+        //     //   )
+        //     //   .then(function (response) {
+        //     //     console.log(response.data);
+        //     //     const role = JSON.stringify(response.data);
+        //     //     console.log(response.data.permissions);
+        //     //     if (role.includes("post:create-post")) {
+        //     //       navigation.replace("AdminBottomTabNav");
+        //     //     } else navigation.replace("BottomTabNav");
+        //     //   })
+        //     //   .catch(function (error) {
+        //     //     console.log(error);
+        //     //   });
+        //   }
+        // });
+
         // alert("Login Successful");
-        var userAttributes = cognitoUser.getUserAttributes(function (
-          err,
-          result
-        ) {
-          if (err) {
-            console.log(err);
-            return;
-          }
-          sessionUserAttributes = JSON.stringify(result);
-          console.log(sessionUserAttributes);
-        });
+        // var userAttributes = cognitoUser.getUserAttributes(function (
+        //   err,
+        //   result
+        // ) {
+        //   if (err) {
+        //     console.log(err);
+        //     return;
+        //   }
+        //   // console.log("attributes", result[0].Value);
+        //   sessionUserAttributes = JSON.stringify(result);
+        //   console.log(sessionUserAttributes);
+        // });
       },
 
       // google identity provider
-      
 
       onFailure: function (err) {
         // User authentication was not successful
@@ -132,6 +225,48 @@ const Login = ({ navigation }) => {
   const handleRegisterClick = () => {
     navigation.replace("RegisterScreen");
   };
+
+  useEffect(() => {
+    console.log("im token", tokenID);
+    console.log("user", user);
+    if (tokenID != null) {
+      // console.log("attributes");
+      // const sessionUserAttributes = JSON.stringify(details.attributes);
+      // console.log(sessionUserAttributes[0].Value);
+      // Alert.alert(
+      //   "Welcome" + " " + details.attributes[3].getValue(),
+      //   "You have successfully logged in",
+      //   [
+      //     {
+      //       text: "OK",
+      //       onPress: () => console.log("OK Pressed"),
+      //       style: "cancel",
+      //     },
+      //   ],
+      //   { cancelable: false }
+      // );
+      // axios
+      //   .get(
+      //     "https://e89qkzfh0g.execute-api.ap-south-1.amazonaws.com/sbx01/getRolePermissions/" +
+      //       user.attributes[2].getValue()
+      //   )
+      //   .then(function (response) {
+      //     console.log(response.data);
+      //     // console.log(response.data);
+      //     const role = JSON.stringify(response.data);
+      //     console.log(response.data.permissions);
+      //     if (role.includes("post:create-post")) {
+      //       navigation.replace("AdminBottomTabNav");
+      //     } else navigation.replace("BottomTabNav");
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+      // if (role.includes("post:create-post")) {
+      //   navigation.replace("AdminBottomTabNav");
+      // } else navigation.replace("BottomTabNav");
+    }
+  }, [loading]);
 
   return (
     <View className="h-full bg-white">
@@ -212,7 +347,12 @@ const Login = ({ navigation }) => {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity className="mt-14" onPress={handleLogin}>
+              <TouchableOpacity
+                className="mt-14"
+                onPress={() => {
+                  handleLogin();
+                }}
+              >
                 <Text className=" w-full bg-blue-500 font-bold shadow-sm rounded-full p-3 text-white text-lg text-center ">
                   Login
                 </Text>
