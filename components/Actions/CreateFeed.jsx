@@ -28,7 +28,7 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import db from "../../firebase";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addDoc,
   serverTimestamp,
@@ -37,6 +37,7 @@ import {
   updateDoc,
   arrayUnion,
 } from "firebase/firestore";
+import { LoadFeeds } from "../../State/actions";
 
 const CarouselItem = ({ item, index }, parallaxProps) => {
   return (
@@ -72,6 +73,7 @@ const CustomSlider = ({ data }) => {
 };
 
 const CreateFeed = ({ navigation }) => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const [images, setImages] = useState([]);
   const [caption, setCaption] = useState("");
@@ -142,6 +144,7 @@ const CreateFeed = ({ navigation }) => {
     await updateDoc(userRef, { feedRef: arrayUnion(feedRef) }).then(() => {
       alert("posted successfully");
     });
+    await dispatch(LoadFeeds());
     setImages([]);
     setCaption("");
     setLoading(false);

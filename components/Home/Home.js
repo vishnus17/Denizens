@@ -6,12 +6,14 @@ import { posts as feeds } from "./Dummy/data";
 import { ScrollView } from "react-native-gesture-handler";
 import db from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadFeeds } from "../../State/actions";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const feedList = useSelector((state) => state.feedList.feedList);
-
-  const [posts, setPosts] = useState([]);
+  console.log("feedList", feedList);
+  const [posts, setPosts] = useState(feedList);
   const [loading, setLoading] = useState(false);
 
   // console.log(state);
@@ -28,21 +30,23 @@ const Home = () => {
   // });
   const fetchFeeds = async () => {
     setLoading(true);
-    let items = [];
-    const querySnapshot = await getDocs(collection(db, "feeds"));
-    items = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    // items.map((item) => {
-    //   console.log("feed ", item);
-    // });
-    let mitems = items.map((feed) => ({
-      feed,
-    }));
-    setPosts(mitems);
+    // let items = [];
+    // const querySnapshot = await getDocs(collection(db, "feeds"));
+    // items = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    // // items.map((item) => {
+    // //   console.log("feed ", item);
+    // // });
+    // let mitems = items.map((feed) => ({
+    //   feed,
+    // }));
+    await dispatch(LoadFeeds());
+    setPosts(feedList);
 
     setLoading(false);
   };
   useEffect(() => {
-    if (posts.length == 0) {
+    if (feedList.length == 0) {
+      console.log("zero");
       fetchFeeds();
     }
   }, []);
@@ -59,7 +63,7 @@ const Home = () => {
         pinchGestureEnabled={false}
         showsVerticalScrollIndicator={false}
       >
-        {posts.map(({ feed }) => (
+        {feedList?.map(({ feed }) => (
           <Feed key={feed.id} {...{ feed }} />
         ))}
       </ScrollView>

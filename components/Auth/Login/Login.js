@@ -93,7 +93,7 @@ const Login = ({ navigation }) => {
 
             axios
               .get(
-                "https://e89qkzfh0g.execute-api.ap-south-1.amazonaws.com/sbx01/getRolePermissions/" +
+                process.env.APIURL +
                   attributes[2].getValue(),
                 {
                   headers: {
