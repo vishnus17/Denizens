@@ -10,7 +10,6 @@ import * as ImagePicker from "expo-image-picker";
 
 // const Post = () => {
 //   const [image, setImage] = useState("")
-import * as ImagePicker from "expo-image-picker"
 import CheckBox from "expo-checkbox"
 
 const pickImage = async () => {
