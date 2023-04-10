@@ -1,3 +1,3 @@
 # Denizens
-Privacy Aware SaaS React Native community Application
+Privacy Aware SaaS community Application built using React Native and AWS.
 

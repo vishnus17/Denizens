@@ -2,12 +2,12 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
-  apiKey: "AIzaSyA_VRtMcY0WJE6JY8q71Xtuxf53SjMX554",
-  authDomain: "denizensfeeds-49c2c.firebaseapp.com",
-  projectId: "denizensfeeds-49c2c",
-  storageBucket: "denizensfeeds-49c2c.appspot.com",
-  messagingSenderId: "596931531563",
-  appId: "1:596931531563:web:b0c0f280b27e17a9ed2b6e",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECTID,
+  storageBucket: process.env.FIREBASE_STORAGE,
+  messagingSenderId: process.env.FIREBASE_MESSAGE_SENDER,
+  appId: process.env.FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
