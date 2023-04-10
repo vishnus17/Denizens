@@ -9,7 +9,12 @@ import * as ImagePicker from "expo-image-picker";
 import { useEffect } from "react";
 import db from "../../firebase";
 import { updateDoc, doc, getDoc } from "firebase/firestore";
-import { ProfileEdit, LoginSuccess, RefreshState } from "../../State/actions";
+import {
+  ProfileEdit,
+  LoginSuccess,
+  RefreshState,
+  LoadFeeds,
+} from "../../State/actions";
 
 const EditProfile = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -97,6 +102,7 @@ const EditProfile = ({ navigation }) => {
       },
     };
     await dispatch(LoginSuccess(currenState));
+    await dispatch(LoadFeeds());
     alert("updated successfully");
     navigation.navigate("ProfileScreen");
 

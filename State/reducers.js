@@ -43,6 +43,7 @@ export default reducer = (state = initialState, action) => {
           userInfo: action.payload.userInfo,
         },
       };
+
     default:
       return state;
   }

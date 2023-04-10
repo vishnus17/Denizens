@@ -9,6 +9,11 @@ export default FeedListReducer = (state = initialState, action) => {
         ...state,
         feedList: action.payload,
       };
+    case "feedList":
+      return {
+        ...state,
+        feedList: action.payload,
+      };
     default:
       return state;
   }

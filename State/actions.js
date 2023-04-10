@@ -1,8 +1,16 @@
 // import { collection, getDoc } from "firebase/firestore";
 // import db from "../firebase";
 import { useDispatch } from "react-redux";
-import { getDoc, doc } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  getDocs,
+  collection,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import db from "../firebase";
+import thunk from "redux-thunk";
 
 // export const LoginRequest = (payload) => {
 //   const dispatch = useDispatch();
@@ -55,5 +63,31 @@ export const RefreshState = async () => {
   return {
     type: "AUTHENTICATION",
     payload: currenState,
+  };
+};
+
+export const LoadFeeds = () => {
+  // const dispatch = useDispatch();
+  return async (dispatch) => {
+    let items = [];
+    const q = query(collection(db, "feeds"), orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
+    items = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    // items.map((item) => {
+    //   console.log("feed ", item);
+    // });
+    let mitems = items.map((feed) => ({
+      feed,
+    }));
+    console.log("feeds", mitems);
+    dispatch(LoadFeedsSuccess(mitems));
+  };
+};
+
+export const LoadFeedsSuccess = (payload) => {
+  console.log("payload", payload);
+  return {
+    type: "feedList",
+    payload: payload,
   };
 };
