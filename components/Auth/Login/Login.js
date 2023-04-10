@@ -48,8 +48,8 @@ const Login = ({ navigation }) => {
     };
     var authenticationDetails = new AuthenticationDetails(authenticationData);
     var poolData = {
-      UserPoolId: "ap-south-1_CjfNcNygq", // Your user pool id here
-      ClientId: "3a6g176qng5vtfnul7pm8uv0ek", // Your client id here
+      UserPoolId: process.env.USERPOOL_ID,
+      ClientId: process.env.CLIENT_ID, 
     };
     var userPool = new CognitoUserPool(poolData);
     var userData = {
@@ -77,24 +77,29 @@ const Login = ({ navigation }) => {
           } else {
             console.log("role", attributes[2].getValue());
             const role = attributes[2].getValue();
-            //   Alert.alert(
-            //     "Welcome" + " " + attributes[3].getValue(),
-            //     "You have successfully logged in",
-            //     [
-            //       {
-            //         text: "OK",
-            //         onPress: () => console.log("OK Pressed"),
-            //         style: "cancel",
-            //       },
-            //     ],
-            //     { cancelable: false }
-            //   );
+              Alert.alert(
+                "Welcome" + " " + attributes[3].getValue(),
+                "You are logging in",
+                [
+                  {
+                    text: "OK",
+                    onPress: () => console.log("OK Pressed"),
+                    style: "cancel",
+                  },
+                ],
+                { cancelable: false }
+              );
             console.log("attributes", attributes[0].Value);
 
             axios
               .get(
                 process.env.APIURL +
-                  attributes[2].getValue()
+                  attributes[2].getValue(),
+                {
+                  headers: {
+                    Authorization: idToken,
+                  },
+                }
               )
               .then(async function (response) {
                 console.log(response.data);
