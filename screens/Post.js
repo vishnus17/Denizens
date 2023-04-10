@@ -96,7 +96,6 @@ const pickImage = async () => {
 // export default Post
 
 import React, { useState } from "react";
-}
 import React, { useState } from "react"
 import {
   View,
